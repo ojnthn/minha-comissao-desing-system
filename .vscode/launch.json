@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Storybook: Launch Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:6006",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "storybook: dev"
+    },
+    {
+      "name": "Storybook: Attach Chrome",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "url": "http://localhost:6006",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
