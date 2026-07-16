@@ -1,32 +1,57 @@
-# React + TypeScript + Vite
+# @mdf/design-system
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Design system em React + TypeScript do projeto **Minhas Vendas**, publicado como pacote
+separado e consumido pelo app principal (`mdf-app`) via instalação de pacote. Componentes
+catalogados e desenvolvidos em isolamento via Storybook, seguindo Atomic Design.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript
+- Vite (build)
+- Storybook 10 (catálogo e desenvolvimento isolado de componentes)
+- oxlint (lint)
+- pnpm (gerenciador de pacotes)
 
-## React Compiler
+`react` e `react-dom` são `peerDependencies` — o pacote não os empacota.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Estrutura
 
-## Expanding the Oxlint configuration
+Todo componente pertence a exatamente uma camada de Atomic Design:
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+src/
+├── components/
+│   ├── atoms/       # menor unidade indivisível de UI
+│   ├── molecules/    # combinação pequena de atoms
+│   ├── organisms/    # seções completas de interface
+│   └── templates/     # esqueleto de página, sem dado real
+├── tokens/            # cores, espaçamento, tipografia — fonte única de verdade visual
+└── components/INDEX.md  # inventário de todos os componentes existentes
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Cada componente tem sua própria pasta com três arquivos:
+`ComponentName.tsx`, `ComponentName.stories.tsx`, `index.ts`.
+
+Ver [src/components/INDEX.md](src/components/INDEX.md) para o inventário completo e
+[docs/DECISIONS.md](docs/DECISIONS.md) para decisões arquiteturais registradas.
+
+## Regras do projeto
+
+Nenhum componente faz fetch de API, acessa contexto de rota, ou conhece regra de negócio
+do domínio — todo dado chega via props. Estilos vêm sempre dos tokens em `src/tokens/`,
+nunca hardcoded. Detalhes completos em [CLAUDE.md](CLAUDE.md).
+
+## Scripts
+
+```bash
+pnpm dev               # servidor de dev (Vite)
+pnpm storybook         # catálogo de componentes em http://localhost:6006
+pnpm build              # typecheck + build da lib
+pnpm build-storybook    # build estático do Storybook
+pnpm lint               # oxlint
+```
+
+## Debug no VSCode
+
+`.vscode/launch.json` inclui configuração para abrir/attachar o Chrome ao Storybook
+(porta 6006) via task `storybook: dev`.
