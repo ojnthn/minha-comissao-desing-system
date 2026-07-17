@@ -1,5 +1,5 @@
 import { Button, type ButtonVariant } from '../../atoms/Button';
-import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
+import { colors, fontFamilyDisplay, fontSize, fontWeight, lineHeight, radius, shadows, spacing } from '../../../tokens';
 
 export interface OnboardingAction {
   label: string;
@@ -18,24 +18,33 @@ export function OnboardingCard({ title, description, actions }: OnboardingCardPr
     <div
       style={{
         background: colors.background.surface,
-        border: `2px dashed ${colors.border.default}`,
-        borderRadius: radius[16],
+        border: title ? `2px dashed ${colors.border.default}` : `1px solid ${colors.border.soft}`,
+        borderRadius: radius[20],
+        boxShadow: shadows.card,
         padding: title ? `${spacing[32]} ${spacing[24]}` : spacing[28],
         textAlign: 'center',
       }}
     >
       {title && (
-        <div style={{ fontSize: fontSize[20], fontWeight: fontWeight.extrabold, marginBottom: spacing[8] }}>
+        <div
+          style={{
+            fontFamily: fontFamilyDisplay,
+            fontSize: fontSize[19],
+            fontWeight: fontWeight.semibold,
+            letterSpacing: '-0.01em',
+            marginBottom: spacing[8],
+          }}
+        >
           {title}
         </div>
       )}
       <div
         style={{
-          fontSize: title ? fontSize[16] : fontSize[17],
-          fontWeight: title ? fontWeight.semibold : fontWeight.bold,
+          fontSize: title ? fontSize['14.5'] : fontSize[16],
+          fontWeight: title ? fontWeight.regular : fontWeight.bold,
           color: title ? colors.text.dim : colors.text.primary,
-          marginBottom: title ? spacing[20] : spacing[14],
-          lineHeight: 1.5,
+          marginBottom: title ? spacing[18] : spacing[16],
+          lineHeight: lineHeight.normal,
         }}
       >
         {description}
