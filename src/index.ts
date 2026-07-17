@@ -42,7 +42,7 @@ export { FormFieldSelect } from './components/molecules/FormFieldSelect';
 export type { FormFieldSelectProps } from './components/molecules/FormFieldSelect';
 
 export { StatCard } from './components/molecules/StatCard';
-export type { StatCardProps, StatCardTone, StatCardTrend } from './components/molecules/StatCard';
+export type { StatCardProps, StatCardIconTone, StatCardTrend } from './components/molecules/StatCard';
 
 export { PedidoSummaryRow } from './components/molecules/PedidoSummaryRow';
 export type { PedidoSummaryRowProps } from './components/molecules/PedidoSummaryRow';
