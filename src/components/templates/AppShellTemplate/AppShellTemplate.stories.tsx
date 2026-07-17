@@ -36,6 +36,14 @@ export const Desktop: Story = {
           onNavigate: setActiveScreen,
           onToggleExpanded: () => setExpanded((prev) => !prev),
         }}
+        topbar={{
+          hasNotifications: true,
+          theme: 'dark',
+          onToggleTheme: () => {},
+          userName: 'Você',
+          userRole: 'Vendedor(a)',
+          userInitials: 'MC',
+        }}
         title="Olá! Aqui está seu resumo"
         subtitle="Julho 2026"
         toastMessage="Pedido salvo!"
@@ -66,6 +74,13 @@ export const MobileCollapsedSidebar: Story = {
             activeScreen,
             onNavigate: setActiveScreen,
             onToggleExpanded: () => setExpanded((prev) => !prev),
+          }}
+          topbar={{
+            theme: 'dark',
+            onToggleTheme: () => {},
+            userName: 'Você',
+            userRole: 'Vendedor(a)',
+            userInitials: 'MC',
           }}
           title="Olá! Aqui está seu resumo"
           subtitle="Julho 2026"
