@@ -29,7 +29,7 @@ const meta: Meta<typeof IconButton> = {
   title: 'Atoms/IconButton',
   component: IconButton,
   argTypes: {
-    variant: { control: 'select', options: ['default', 'danger', 'dark'] },
+    variant: { control: 'select', options: ['default', 'edit', 'danger', 'dark'] },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 };
@@ -40,6 +40,14 @@ type Story = StoryObj<typeof IconButton>;
 export const Default: Story = {
   args: {
     icon: EditIcon,
+    'aria-label': 'Editar',
+  },
+};
+
+export const Edit: Story = {
+  args: {
+    icon: EditIcon,
+    variant: 'edit',
     'aria-label': 'Editar',
   },
 };
