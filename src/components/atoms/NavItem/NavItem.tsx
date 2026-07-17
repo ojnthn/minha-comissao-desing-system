@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
 
 export interface NavItemProps {
@@ -10,32 +10,39 @@ export interface NavItemProps {
 }
 
 export function NavItem({ icon, label, expanded = true, active = false, onClick }: NavItemProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const background = active ? colors.accent.default : isHovered ? colors.background.surfaceAlt : 'transparent';
+  const color = active ? colors.text.onAccent : isHovered ? colors.text.primary : colors.text.dim;
+
   return (
     <button
       type="button"
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       aria-current={active ? 'page' : undefined}
       title={expanded ? undefined : label}
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: spacing[14],
-        width: `calc(100% - ${spacing[20]})`,
-        background: active ? colors.accent.default : 'transparent',
+        gap: spacing[13],
+        width: '100%',
+        background,
         border: 'none',
-        color: colors.text.onAccent,
-        padding: `${spacing[13]} ${spacing[22]}`,
-        margin: `${spacing[2]} ${spacing[10]}`,
+        color,
+        padding: `${spacing[11]} ${spacing[12]}`,
         borderRadius: radius[11],
         cursor: 'pointer',
         textAlign: 'left',
         whiteSpace: 'nowrap',
+        transition: 'background .15s ease, color .15s ease',
       }}
     >
       <span aria-hidden="true" style={{ display: 'flex', flex: 'none' }}>
         {icon}
       </span>
-      {expanded && <span style={{ fontSize: fontSize[16], fontWeight: fontWeight.semibold }}>{label}</span>}
+      {expanded && <span style={{ fontSize: fontSize['14.5'], fontWeight: fontWeight.semibold }}>{label}</span>}
     </button>
   );
 }
