@@ -25,6 +25,7 @@
 | PedidoListItem | molecules | Linha de pedido no histórico, com editar/excluir | src/components/molecules/PedidoListItem |
 | ProdutoListItem | molecules | Linha de chapa cadastrada, com editar/excluir | src/components/molecules/ProdutoListItem |
 | PercentualListItem | molecules | Linha de percentual cadastrado, com editar/excluir | src/components/molecules/PercentualListItem |
+| SearchField | molecules | Campo de busca com ícone, estilo topbar | src/components/molecules/SearchField |
 | DashboardSummary | organisms | Cartões de métrica + CTA + pedidos recentes | src/components/organisms/DashboardSummary |
 | PedidosList | organisms | Filtro por mês + lista de pedidos com estado vazio | src/components/organisms/PedidosList |
 | ProdutosList | organisms | Lista de chapas cadastradas com estado vazio | src/components/organisms/ProdutosList |

@@ -56,6 +56,9 @@ export type { ProdutoListItemProps } from './components/molecules/ProdutoListIte
 export { PercentualListItem } from './components/molecules/PercentualListItem';
 export type { PercentualListItemProps } from './components/molecules/PercentualListItem';
 
+export { SearchField } from './components/molecules/SearchField';
+export type { SearchFieldProps } from './components/molecules/SearchField';
+
 // organisms
 export { OnboardingCard } from './components/organisms/OnboardingCard';
 export type { OnboardingCardProps, OnboardingAction } from './components/organisms/OnboardingCard';
