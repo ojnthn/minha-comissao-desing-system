@@ -1,7 +1,7 @@
 import { useState, type InputHTMLAttributes } from 'react';
 import { colors, fontSize, radius, spacing } from '../../../tokens';
 
-export type InputType = 'text' | 'number' | 'date';
+export type InputType = 'text' | 'number' | 'date' | 'password';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {

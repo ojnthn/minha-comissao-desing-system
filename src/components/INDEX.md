@@ -6,7 +6,7 @@
 | Componente | Camada | Responsabilidade (1 linha) | Caminho |
 |---|---|---|---|
 | Button | atoms | Botão de ação única, com variantes (primary/dark/secondary) e tamanhos (md/lg) | src/components/atoms/Button |
-| Input | atoms | Campo de texto/número/data controlado | src/components/atoms/Input |
+| Input | atoms | Campo de texto/número/data/senha controlado | src/components/atoms/Input |
 | Label | atoms | Rótulo de campo de formulário | src/components/atoms/Label |
 | Select | atoms | Seletor nativo de opção única | src/components/atoms/Select |
 | IconButton | atoms | Botão apenas com ícone (editar/excluir/menu) | src/components/atoms/IconButton |
