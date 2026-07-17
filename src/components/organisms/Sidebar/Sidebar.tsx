@@ -3,7 +3,7 @@ import { NavItem } from '../../atoms/NavItem';
 import { Avatar } from '../../atoms/Avatar';
 import { colors, fontFamilyDisplay, fontSize, fontWeight, spacing } from '../../../tokens';
 
-export type SidebarScreen = 'dashboard' | 'novo' | 'pedidos' | 'produtos' | 'percentuais';
+export type SidebarScreen = 'dashboard' | 'novo' | 'pedidos' | 'produtos';
 
 export interface SidebarProps {
   expanded: boolean;
@@ -43,14 +43,6 @@ const ProdutosIcon = (
   </svg>
 );
 
-const PercentuaisIcon = (
-  <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
-    <circle cx="7.5" cy="7.5" r="3" stroke="currentColor" strokeWidth="2" />
-    <circle cx="16.5" cy="16.5" r="3" stroke="currentColor" strokeWidth="2" />
-    <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
 const ChevronLeftIcon = (
   <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
     <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
@@ -62,7 +54,6 @@ const navConfig: { key: SidebarScreen; label: string; icon: ReactNode }[] = [
   { key: 'novo', label: 'Novo Pedido', icon: NovoIcon },
   { key: 'pedidos', label: 'Meus Pedidos', icon: PedidosIcon },
   { key: 'produtos', label: 'Minhas Chapas', icon: ProdutosIcon },
-  { key: 'percentuais', label: 'Comissões', icon: PercentuaisIcon },
 ];
 
 export function Sidebar({ expanded, activeScreen, onNavigate, onToggleExpanded }: SidebarProps) {

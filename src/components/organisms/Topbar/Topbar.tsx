@@ -4,7 +4,9 @@ import { ThemeToggle, type Theme } from '../../atoms/ThemeToggle';
 import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
 
 export interface TopbarProps {
+  showSearch?: boolean;
   searchProps?: SearchFieldProps;
+  showNotifications?: boolean;
   hasNotifications?: boolean;
   onNotificationsClick?: () => void;
   theme: Theme;
@@ -34,7 +36,9 @@ const ChevronDownIcon = (
 );
 
 export function Topbar({
+  showSearch = true,
   searchProps,
+  showNotifications = true,
   hasNotifications = false,
   onNotificationsClick,
   theme,
@@ -58,48 +62,52 @@ export function Topbar({
         zIndex: 20,
       }}
     >
-      <div style={{ flex: 1, maxWidth: '380px' }}>
-        <SearchField placeholder="Buscar cliente, chapa, pedido..." {...searchProps} />
-      </div>
+      {showSearch && (
+        <div style={{ flex: 1, maxWidth: '380px' }}>
+          <SearchField placeholder="Buscar cliente, chapa, pedido..." {...searchProps} />
+        </div>
+      )}
 
       <div style={{ flex: 1 }} />
 
-      <button
-        type="button"
-        onClick={onNotificationsClick}
-        aria-label="Notificações"
-        style={{
-          width: '40px',
-          height: '40px',
-          borderRadius: radius[11],
-          border: `1px solid ${colors.border.default}`,
-          background: colors.background.surface,
-          color: colors.text.dim,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
-          flex: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        {BellIcon}
-        {hasNotifications && (
-          <span
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              top: '8px',
-              right: '8px',
-              width: '7px',
-              height: '7px',
-              borderRadius: '50%',
-              background: colors.danger.text,
-              border: `1.5px solid ${colors.background.surface}`,
-            }}
-          />
-        )}
-      </button>
+      {showNotifications && (
+        <button
+          type="button"
+          onClick={onNotificationsClick}
+          aria-label="Notificações"
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: radius[11],
+            border: `1px solid ${colors.border.default}`,
+            background: colors.background.surface,
+            color: colors.text.dim,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            flex: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          {BellIcon}
+          {hasNotifications && (
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                background: colors.danger.text,
+                border: `1.5px solid ${colors.background.surface}`,
+              }}
+            />
+          )}
+        </button>
+      )}
 
       <ThemeToggle theme={theme} onToggle={onToggleTheme} />
 
