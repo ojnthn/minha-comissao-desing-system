@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minha Comissão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#121009; --bg-elevated:#1a160f; --surface:#1f1a12; --surface-2:#262016;
+  --border:#33291a; --border-soft:#241f16;
+  --text:#f3ece0; --text-dim:#b3a68f; --text-faint:#8a7d68;
+  --accent:#e0a458; --accent-strong:#f0b876; --accent-ink:#1a1206; --accent-soft:rgba(224,164,88,0.14);
+  --success:#7bb283; --success-soft:rgba(123,178,131,0.14);
+  --info:#6fa8c9; --info-soft:rgba(111,168,201,0.14);
+  --warn:#cf8f63; --warn-soft:rgba(207,143,99,0.14);
+  --danger:#c9695f; --danger-soft:rgba(201,105,95,0.14);
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -16px rgba(0,0,0,0.55);
+  --radius-lg:20px; --radius-md:14px; --radius-sm:10px;
+}
+html[data-theme="light"]{
+  --bg:#faf6ee; --bg-elevated:#ffffff; --surface:#ffffff; --surface-2:#f4ecdd;
+  --border:#e7dbc4; --border-soft:#efe6d4;
+  --text:#2a2216; --text-dim:#6c5c44; --text-faint:#9c8b6d;
+  --accent:#b8792f; --accent-strong:#96611f; --accent-ink:#fff9ef; --accent-soft:rgba(184,121,47,0.12);
+  --success:#3f7a49; --success-soft:rgba(63,122,73,0.12);
+  --info:#3c73a0; --info-soft:rgba(60,115,160,0.12);
+  --warn:#a85f37; --warn-soft:rgba(168,95,55,0.12);
+  --danger:#a13f36; --danger-soft:rgba(161,63,54,0.12);
+  --shadow: 0 1px 2px rgba(40,30,10,0.06), 0 12px 28px -18px rgba(40,30,10,0.18);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif;
+  min-height:100vh; -webkit-tap-highlight-color:transparent;
+}
+.num, .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+.display{font-family:'Fraunces',serif;}
+h1,h2,h3{margin:0; font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em;}
+input,select,button{font-family:inherit; color:inherit;}
+input:focus-visible, select:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+button{cursor:pointer;}
+a{color:inherit;}
+::selection{background:var(--accent-soft);}
+
+/* ---------- layout ---------- */
+.shell{display:flex; min-height:100vh;}
+.sidebar{
+  width:240px; flex:none; background:var(--bg-elevated); border-right:1px solid var(--border-soft);
+  display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:hidden;
+  transition:width .22s cubic-bezier(.4,0,.2,1); padding:18px 0;
+}
+.sidebar.collapsed{width:80px;}
+.brand{display:flex; align-items:center; gap:12px; padding:4px 20px 20px; white-space:nowrap; border-bottom:1px solid var(--border-soft); margin-bottom:10px;}
+.sidebar.collapsed .brand{padding:4px 0 20px; justify-content:center;}
+.brand-mark{width:38px; height:38px; border-radius:11px; background:linear-gradient(155deg, var(--accent), var(--accent-strong)); flex:none; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent-ink); font-family:'Fraunces',serif; font-size:17px;}
+.brand-text{overflow:hidden;}
+.brand-name{font-family:'Fraunces',serif; font-weight:600; font-size:18px; line-height:1.15;}
+.brand-sub{font-size:11px; color:var(--text-faint); letter-spacing:.04em; text-transform:uppercase; margin-top:1px;}
+.sidebar.collapsed .brand-text{display:none;}
+
+.navgroup{display:flex; flex-direction:column; gap:2px; padding:6px 10px;}
+.sidebar.collapsed .navgroup{padding:6px 14px;}
+.navitem{
+  display:flex; align-items:center; gap:13px; padding:11px 12px; border-radius:11px; border:none;
+  background:transparent; color:var(--text-dim); text-align:left; font-size:14.5px; font-weight:600;
+  white-space:nowrap; transition:background .15s ease, color .15s ease; width:100%;
+}
+.sidebar.collapsed .navitem{justify-content:center; padding:12px; gap:0;}
+.navitem svg{flex:none; width:19px; height:19px;}
+.navitem:hover{background:var(--surface-2); color:var(--text);}
+.navitem.active{background:var(--accent); color:var(--accent-ink);}
+.navitem.active svg{color:var(--accent-ink);}
+.sidebar.collapsed .navitem span{display:none;}
+.nav-spacer{flex:1;}
+.nav-collapse{display:flex; align-items:center; gap:12px; padding:11px 22px; background:none; border:none; color:var(--text-faint); font-size:13px; font-weight:600; width:100%;}
+.nav-collapse svg{width:19px; height:19px; flex:none;}
+.nav-collapse:hover{color:var(--text);}
+.sidebar.collapsed .nav-collapse{justify-content:center; padding:11px 14px;}
+.sidebar.collapsed .nav-collapse span{display:none;}
+.sidebar.collapsed .nav-collapse svg{transform:rotate(180deg);}
+
+.main{flex:1; min-width:0; display:flex; flex-direction:column;}
+.topbar{
+  display:flex; align-items:center; gap:16px; padding:16px 28px; border-bottom:1px solid var(--border-soft);
+  position:sticky; top:0; background:var(--bg); z-index:20;
+}
+.search{
+  flex:1; max-width:380px; display:flex; align-items:center; gap:10px; background:var(--surface);
+  border:1px solid var(--border); border-radius:12px; padding:10px 14px; color:var(--text-faint);
+}
+.search svg{flex:none; width:17px; height:17px;}
+.search input{background:none; border:none; width:100%; font-size:14px; color:var(--text);}
+.search input::placeholder{color:var(--text-faint);}
+.topbar-spacer{flex:1;}
+.icon-btn{
+  width:40px; height:40px; border-radius:11px; border:1px solid var(--border); background:var(--surface);
+  color:var(--text-dim); display:flex; align-items:center; justify-content:center; position:relative; flex:none;
+}
+.icon-btn svg{width:18px; height:18px;}
+.icon-btn:hover{color:var(--text); border-color:var(--accent);}
+.dot-badge{position:absolute; top:8px; right:8px; width:7px; height:7px; border-radius:50%; background:var(--danger); border:1.5px solid var(--surface);}
+.theme-toggle{width:52px; height:32px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); position:relative; flex:none; padding:0;}
+.theme-toggle .knob{position:absolute; top:2px; left:2px; width:26px; height:26px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; color:var(--accent-ink); transition:left .18s ease;}
+html[data-theme="light"] .theme-toggle .knob{left:22px;}
+.theme-toggle .knob svg{width:14px; height:14px;}
+.avatar-wrap{display:flex; align-items:center; gap:9px; padding:5px 10px 5px 5px; border-radius:12px; border:1px solid var(--border); background:var(--surface); flex:none;}
+.avatar{width:32px; height:32px; border-radius:9px; background:linear-gradient(155deg, var(--info), var(--accent)); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12.5px; color:#12100b; flex:none;}
+.avatar-name{font-size:13.5px; font-weight:600; line-height:1.2;}
+.avatar-role{font-size:11.5px; color:var(--text-faint);}
+.avatar-wrap svg{width:15px; height:15px; color:var(--text-faint);}
+
+.content{flex:1; padding:26px 28px 60px; max-width:1180px; width:100%; margin:0 auto;}
+.page-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap;}
+.page-title{font-size:27px;}
+.page-sub{font-size:14.5px; color:var(--text-faint); margin-top:4px;}
+
+/* ---------- primitives ---------- */
+.card{background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius-lg); box-shadow:var(--shadow);}
+.card-pad{padding:22px;}
+.grid{display:grid; gap:16px;}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media (max-width:980px){ .grid-4{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .grid-4{grid-template-columns:1fr;} }
+
+.btn{border:none; border-radius:12px; padding:13px 20px; font-size:14.5px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:9px;}
+.btn-primary{background:var(--accent); color:var(--accent-ink);}
+.btn-primary:disabled{background:var(--surface-2); color:var(--text-faint); cursor:not-allowed;}
+.btn-ghost{background:var(--surface-2); color:var(--text);}
+.btn svg{width:17px; height:17px;}
+.btn-block{width:100%;}
+
+.field{display:flex; flex-direction:column; gap:7px;}
+.field label{font-size:13.5px; font-weight:700; color:var(--text-dim);}
+.field input, .field select{
+  width:100%; padding:13px 14px; font-size:15px; border-radius:11px; border:1.5px solid var(--border);
+  background:var(--bg-elevated); color:var(--text);
+}
+.field select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%238a7d68' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;}
+
+.badge{display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700;}
+.icon-tile{width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex:none;}
+.icon-tile svg{width:21px; height:21px;}
+.trend{display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:700;}
+.trend svg{width:13px; height:13px;}
+
+.list-row{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:15px 18px; border-radius:14px; border:1px solid var(--border-soft); background:var(--bg-elevated);}
+.list-row + .list-row{margin-top:10px;}
+.icon-action{width:36px; height:36px; border-radius:9px; border:1.5px solid var(--border); background:var(--surface); display:flex; align-items:center; justify-content:center;}
+.icon-action svg{width:15px; height:15px;}
+.icon-action.danger{border-color:var(--danger); color:var(--danger); background:var(--danger-soft);}
+.icon-action.edit{color:var(--accent); border-color:var(--accent);}
+
+.empty{text-align:center; padding:34px 20px; color:var(--text-faint); font-size:14.5px; background:var(--bg-elevated); border:1px dashed var(--border); border-radius:16px;}
+.toast{background:var(--success-soft); border:1px solid var(--success); color:var(--success); padding:13px 18px; border-radius:12px; font-size:14.5px; font-weight:700; margin-bottom:18px;}
+.section-title{font-size:17px; font-weight:700; font-family:'Fraunces',serif; margin-bottom:14px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* =============== ICONS =============== */
+const I = {
+  dashboard:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" opacity=".55"/><rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor" opacity=".55"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="3" rx="1.5" fill="currentColor"/><rect x="4" y="11" width="16" height="3" rx="1.5" fill="currentColor" opacity=".7"/><rect x="4" y="17" width="10" height="3" rx="1.5" fill="currentColor" opacity=".45"/></svg>',
+  layers:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  percent:'<svg viewBox="0 0 24 24" fill="none"><circle cx="7.5" cy="7.5" r="3" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="16.5" r="3" stroke="currentColor" stroke-width="2"/><path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  chevronLeft:'<svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  menu:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 19a2 2 0 004 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 1110.2 4a7 7 0 009.8 10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  chevronDown:'<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  edit:'<svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-8 0l1 13a1 1 0 001 1h6a1 1 0 001-1l1-13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  arrowRight:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  trendUp:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 16l6-6 4 4 6-8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  trendDown:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 8l6 6 4-4 6 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  coin:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 7.5v9M9.5 9.7c0-1.2 1.1-1.7 2.5-1.7s2.5.6 2.5 1.6c0 2.2-5 1-5 3.2 0 1 1.1 1.7 2.5 1.7s2.5-.6 2.5-1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  clipboard:'<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="4" width="12" height="17" rx="2" stroke="currentColor" stroke-width="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1" fill="currentColor"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+};
+
+/* =============== FORMATTERS =============== */
+const fmtBRL = (n) => (Number(n)||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+const fmtPercent = (n) => { const v = Number(n)||0; return (v % 1 === 0 ? v.toFixed(0) : v.toFixed(1)) + '%'; };
+const fmtM2 = (n) => (Number(n)||0).toFixed(2).replace('.', ',') + ' m²';
+const fmtDateBR = (iso) => { if(!iso) return '—'; const [y,m,d] = iso.split('-'); return `${d}/${m}/${y}`; };
+const monthKey = (iso) => iso.slice(0,7);
+const MONTHS_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const monthLabel = (key) => { const [y,m] = key.split('-').map(Number); return `${MONTHS_PT[m-1]}/${y}`; };
+const monthLabelShort = (key) => { const [,m] = key.split('-').map(Number); return MONTHS_PT[m-1]; };
+const previousMonthKey = (key) => { const [y,m] = key.split('-').map(Number); const d = new Date(y, m-2, 1); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; };
+const uid = () => 'id_' + Math.random().toString(36).slice(2,10);
+const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+const isoOf = (y,m,day) => `${y}-${String(m).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+const computeValor = (m2, valorPorM2) => (Number(m2)||0) * (Number(valorPorM2)||0);
+const computeComissao = (valor, pct) => (Number(valor)||0) * (Number(pct)||0) / 100;
+
+/* =============== SEED DATA (relative to "today" so the demo always looks alive) =============== */
+function buildSeed(){
+  const now = new Date();
+  const percentuais = [
+    { id:'pc1', descricao:'Padrão', valor:10 },
+    { id:'pc2', descricao:'Promoção', valor:6 },
+    { id:'pc3', descricao:'Premium', valor:15 },
+  ];
+  const produtos = [
+    { id:'pr1', nome:'MDF Branco TX 15mm', valorPorM2:68, percentualComissaoId:'pc1' },
+    { id:'pr2', nome:'MDF Amadeirado Carvalho 18mm', valorPorM2:92, percentualComissaoId:'pc3' },
+    { id:'pr3', nome:'MDF Preto Fosco 15mm', valorPorM2:84, percentualComissaoId:'pc1' },
+    { id:'pr4', nome:'MDF Off-White 15mm', valorPorM2:70, percentualComissaoId:'pc2' },
+  ];
+  const clientes = ['Marcenaria Bom Sucesso','Studio Vale Móveis','Ateliê Raiz','Marcenaria Dois Pinheiros','Casa Nogueira','Marcenaria Alto da Serra','Loft Interiores','Marcenaria União'];
+  // offsets: [monthsAgo, day, clienteIdx, produtoIdx, m2, pctIdx]
+  const plan = [
+    [0,3,0,0,7.5,0],[0,6,1,1,4.2,2],[0,9,2,2,9.8,0],[0,12,3,3,3.1,1],
+    [0,14,4,1,6.6,2],[0,16,5,0,5.4,0],[1,2,6,2,8.1,0],[1,7,7,1,4.9,2],
+    [1,11,0,3,6.2,1],[1,18,1,0,7.9,0],[2,4,2,1,5.5,2],[2,15,3,2,9.1,0],
+    [3,5,4,0,4.4,0],[3,20,5,3,6.8,1],[4,8,6,1,7.2,2],[4,22,7,2,5.9,0],
+    [5,10,0,0,8.6,0],[5,25,1,1,3.7,2],
+  ];
+  const pedidos = plan.map(([mAgo, day, cIdx, pIdx, m2, pcIdx]) => {
+    const d = new Date(now.getFullYear(), now.getMonth()-mAgo, Math.min(day, 27));
+    return {
+      id: uid(), cliente: clientes[cIdx], produtoId: produtos[pIdx].id, m2,
+      percentualVenda: percentuais[pcIdx].valor,
+      data: isoOf(d.getFullYear(), d.getMonth()+1, d.getDate()),
+    };
+  });
+  return { percentuais, produtos, pedidos };
+}
+
+/* =============== STATE =============== */
+const seed = buildSeed();
+const state = {
+  theme:'dark', navExpanded:true, screen:'dashboard',
+  percentuais: seed.percentuais, produtos: seed.produtos, pedidos: seed.pedidos,
+  pctForm:{ descricao:'', valor:'' }, pctEditingId:null,
+  prodForm:{ nome:'', valorPorM2:'', percentualComissaoId:'' }, prodEditingId:null,
+  pedForm:{ cliente:'', produtoId:'', m2:'', percentualId:'', data: todayISO() }, pedEditingId:null,
+  filtroMes:'todos', toast:null,
+};
+
+/* =============== APP (event handlers + render) =============== */
+const app = {
+  setScreen(s){ state.screen = s; if (s==='novo' && !state.pedEditingId){ state.pedForm = { cliente:'', produtoId:'', m2:'', percentualId:'', data: todayISO() }; } render(); },
+  toggleNav(){ state.navExpanded = !state.navExpanded; render(); },
+  toggleTheme(){ state.theme = state.theme === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', state.theme); render(); },
+
+  toast(msg){ state.toast = msg; render(); clearTimeout(app._t); app._t = setTimeout(()=>{ state.toast=null; renderToastOnly(); }, 2600); },
+
+  /* --- percentuais --- */
+  setPctField(field, val){ state.pctForm[field] = val; },
+  editPct(id){ const pc = state.percentuais.find(p=>p.id===id); state.pctForm = { descricao:pc.descricao, valor:String(pc.valor) }; state.pctEditingId = id; render(); },
+  cancelPct(){ state.pctForm = { descricao:'', valor:'' }; state.pctEditingId = null; render(); },
+  savePct(){
+    const descricao = (document.getElementById('pct-descricao')||{}).value?.trim() ?? state.pctForm.descricao.trim();
+    const valor = parseFloat((document.getElementById('pct-valor')||{}).value ?? state.pctForm.valor);
+    if(!descricao || isNaN(valor)) return;
+    if(state.pctEditingId){ state.percentuais = state.percentuais.map(p=>p.id===state.pctEditingId?{...p,descricao,valor}:p); }
+    else { state.percentuais.push({ id:uid(), descricao, valor }); }
+    const wasEdit = !!state.pctEditingId;
+    state.pctForm = { descricao:'', valor:'' }; state.pctEditingId = null;
+    app.toast(wasEdit ? 'Percentual atualizado!' : 'Percentual adicionado!');
+  },
+  deletePct(id){ if(!confirm('Excluir este percentual?')) return; state.percentuais = state.percentuais.filter(p=>p.id!==id); render(); },
+
+  /* --- produtos --- */
+  editProd(id){ const p = state.produtos.find(x=>x.id===id); state.prodForm = { nome:p.nome, valorPorM2:String(p.valorPorM2), percentualComissaoId:p.percentualComissaoId }; state.prodEditingId = id; render(); },
+  cancelProd(){ state.prodForm = { nome:'', valorPorM2:'', percentualComissaoId:'' }; state.prodEditingId = null; render(); },
+  saveProd(){
+    const nome = (document.getElementById('prod-nome')||{}).value?.trim() ?? '';
+    const valorPorM2 = parseFloat((document.getElementById('prod-valor')||{}).value);
+    const percentualComissaoId = document.getElementById('prod-percentual').value;
+    if(!nome || isNaN(valorPorM2) || !percentualComissaoId) return;
+    if(state.prodEditingId){ state.produtos = state.produtos.map(p=>p.id===state.prodEditingId?{...p,nome,valorPorM2,percentualComissaoId}:p); }
+    else { state.produtos.push({ id:uid(), nome, valorPorM2, percentualComissaoId }); }
+    const wasEdit = !!state.prodEditingId;
+    state.prodForm = { nome:'', valorPorM2:'', percentualComissaoId:'' }; state.prodEditingId = null;
+    app.toast(wasEdit ? 'Chapa atualizada!' : 'Chapa adicionada!');
+  },
+  deleteProd(id){ if(!confirm('Excluir esta chapa?')) return; state.produtos = state.produtos.filter(p=>p.id!==id); render(); },
+
+  /* --- pedidos --- */
+  onProdutoChangePed(){
+    const produtoId = document.getElementById('ped-produto').value;
+    const prod = state.produtos.find(p=>p.id===produtoId);
+    state.pedForm.produtoId = produtoId;
+    if(prod) state.pedForm.percentualId = prod.percentualComissaoId;
+    render();
+  },
+  updatePedPreview(){
+    state.pedForm.cliente = document.getElementById('ped-cliente').value;
+    state.pedForm.m2 = document.getElementById('ped-m2').value;
+    state.pedForm.data = document.getElementById('ped-data').value;
+    const prod = state.produtos.find(p=>p.id===state.pedForm.produtoId);
+    const pct = state.percentuais.find(p=>p.id===state.pedForm.percentualId);
+    const valor = prod ? computeValor(state.pedForm.m2, prod.valorPorM2) : 0;
+    const comissao = pct ? computeComissao(valor, pct.valor) : 0;
+    const valEl = document.getElementById('ped-valor-preview');
+    const comEl = document.getElementById('ped-comissao-preview');
+    if(valEl) valEl.textContent = fmtBRL(valor);
+    if(comEl) comEl.textContent = fmtBRL(comissao);
+    const valid = !!(state.pedForm.cliente.trim() && prod && parseFloat(state.pedForm.m2) > 0 && pct && state.pedForm.data);
+    const btn = document.getElementById('ped-save-btn');
+    if(btn) btn.disabled = !valid;
+  },
+  onPercentualChangePed(){ state.pedForm.percentualId = document.getElementById('ped-percentual').value; render(); },
+  editPed(id){
+    const p = state.pedidos.find(x=>x.id===id);
+    const pct = state.percentuais.find(pc=>pc.valor===p.percentualVenda);
+    state.pedEditingId = id;
+    state.pedForm = { cliente:p.cliente, produtoId:p.produtoId, m2:String(p.m2), percentualId: pct?pct.id:(state.percentuais[0]?state.percentuais[0].id:''), data:p.data };
+    state.screen = 'novo'; render();
+  },
+  cancelPed(){ state.pedEditingId = null; state.pedForm = { cliente:'', produtoId:'', m2:'', percentualId:'', data: todayISO() }; state.screen = 'pedidos'; render(); },
+  savePed(){
+    const cliente = document.getElementById('ped-cliente').value.trim();
+    const produtoId = document.getElementById('ped-produto').value;
+    const m2 = parseFloat(document.getElementById('ped-m2').value);
+    const percentualId = document.getElementById('ped-percentual').value;
+    const data = document.getElementById('ped-data').value;
+    const prod = state.produtos.find(p=>p.id===produtoId);
+    const pct = state.percentuais.find(p=>p.id===percentualId);
+    if(!cliente || !prod || isNaN(m2) || m2<=0 || !pct || !data) return;
+    const record = { cliente, produtoId:prod.id, m2, percentualVenda:pct.valor, data };
+    if(state.pedEditingId){ state.pedidos = state.pedidos.map(p=>p.id===state.pedEditingId?{...p,...record}:p); }
+    else { state.pedidos.push({ id:uid(), ...record }); }
+    const wasEdit = !!state.pedEditingId;
+    state.pedEditingId = null; state.pedForm = { cliente:'', produtoId:'', m2:'', percentualId:'', data: todayISO() };
+    state.screen = 'pedidos';
+    app.toast(wasEdit ? 'Pedido atualizado!' : 'Pedido salvo!');
+  },
+  deletePed(id){ if(!confirm('Excluir este pedido?')) return; state.pedidos = state.pedidos.filter(p=>p.id!==id); render(); },
+  setFiltroMes(){ state.filtroMes = document.getElementById('filtro-mes').value; render(); },
+};
+window.app = app;
+
+/* =============== CHART HELPERS (inline SVG, sem libs externas) =============== */
+function lineChart(data, opts={}){
+  const w = 900, h = 220, padL = 8, padR = 8, padT = 18, padB = 26;
+  const max = Math.max(1, ...data.map(d=>d.value));
+  const min = 0;
+  const stepX = (w-padL-padR) / (data.length-1 || 1);
+  const pts = data.map((d,i)=>{
+    const x = padL + i*stepX;
+    const y = padT + (1 - (d.value-min)/(max-min||1)) * (h-padT-padB);
+    return [x,y];
+  });
+  const path = pts.map((p,i)=> (i===0?'M':'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const area = path + ` L${pts[pts.length-1][0].toFixed(1)},${h-padB} L${pts[0][0].toFixed(1)},${h-padB} Z`;
+  const dots = pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.2" fill="var(--bg-elevated)" stroke="var(--accent)" stroke-width="2"/>`).join('');
+  const labels = data.map((d,i)=>`<text x="${pts[i][0].toFixed(1)}" y="${h-6}" text-anchor="middle" font-size="11" fill="var(--text-faint)" font-family="Inter,sans-serif">${d.label}</text>`).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:${h}px; overflow:visible;">
+    <defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path d="${area}" fill="url(#areaFill)"/>
+    <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    ${dots}${labels}
+  </svg>`;
+}
+
+/* =============== DERIVED VALUES =============== */
+function computeDerived(){
+  const { percentuais, produtos, pedidos } = state;
+  const produtoById = (id) => produtos.find(p=>p.id===id);
+  const pctById = (id) => percentuais.find(p=>p.id===id);
+  const enrich = (p) => {
+    const prod = produtoById(p.produtoId);
+    const valor = computeValor(p.m2, prod?prod.valorPorM2:0);
+    const comissao = computeComissao(valor, p.percentualVenda);
+    return { ...p, produtoNome: prod?prod.nome:'—', valor, comissao,
+      valorFmt: fmtBRL(valor), comissaoFmt: fmtBRL(comissao), m2Fmt: fmtM2(p.m2),
+      percentualFmt: fmtPercent(p.percentualVenda), dataFmt: fmtDateBR(p.data) };
+  };
+  const allSorted = [...pedidos].sort((a,b)=> b.data.localeCompare(a.data)).map(enrich);
+  const nowKey = monthKey(todayISO());
+  const prevKey = previousMonthKey(nowKey);
+  const sumFor = (key) => pedidos.filter(p=>monthKey(p.data)===key).reduce((acc,p)=>{
+    const prod = produtoById(p.produtoId);
+    const valor = computeValor(p.m2, prod?prod.valorPorM2:0);
+    const comissao = computeComissao(valor, p.percentualVenda);
+    return { valor: acc.valor+valor, comissao: acc.comissao+comissao };
+  }, {valor:0, comissao:0});
+  const atual = sumFor(nowKey), anterior = sumFor(prevKey);
+  const pctChange = (curr, prev) => prev>0 ? ((curr-prev)/prev)*100 : (curr>0?100:0);
+
+  // últimos 12 meses (para o line chart)
+  const last12 = Array.from({length:12}, (_,i)=>{
+    const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - (11-i));
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    return { key, label: monthLabelShort(key), value: sumFor(key).valor };
+  });
+
+  const monthSet = Array.from(new Set(pedidos.map(p=>monthKey(p.data)))).sort().reverse();
+  const mesesDisponiveis = monthSet.map(k=>({ key:k, label:monthLabel(k) }));
+  const filteredPedidos = state.filtroMes==='todos' ? allSorted : allSorted.filter(p=>monthKey(p.data)===state.filtroMes);
+
+  return { produtoById, pctById, enrich, allSorted, nowKey, prevKey, atual, anterior, pctChange, last12, mesesDisponiveis, filteredPedidos };
+}
+
+/* =============== RENDER: SIDEBAR + TOPBAR =============== */
+const NAV_ITEMS = [
+  { key:'dashboard', label:'Resumo', icon:I.dashboard },
+  { key:'novo', label:'Novo Pedido', icon:I.plus },
+  { key:'pedidos', label:'Meus Pedidos', icon:I.list },
+  { key:'produtos', label:'Minhas Chapas', icon:I.layers },
+  { key:'percentuais', label:'Comissões', icon:I.percent },
+];
+
+function renderSidebar(){
+  const collapsed = !state.navExpanded;
+  return `
+  <div class="sidebar ${collapsed?'collapsed':''}" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">MC</div>
+      <div class="brand-text">
+        <div class="brand-name">Minha Comissão</div>
+        <div class="brand-sub">Painel do vendedor</div>
+      </div>
+    </div>
+    <div class="navgroup">
+      ${NAV_ITEMS.map(n=>`
+        <button class="navitem ${state.screen===n.key?'active':''}" onclick="app.setScreen('${n.key}')" title="${collapsed?n.label:''}">
+          ${n.icon}<span>${n.label}</span>
+        </button>`).join('')}
+    </div>
+    <div class="nav-spacer"></div>
+    <button class="nav-collapse" onclick="app.toggleNav()" title="${collapsed?'Expandir menu':''}">${I.chevronLeft}<span>Ocultar menu</span></button>
+  </div>`;
+}
+
+function renderTopbar(titles){
+  const t = titles[state.screen] || {title:'', sub:''};
+  return `
+  <div class="topbar">
+    <div class="search">${I.search}<input placeholder="Buscar cliente, chapa, pedido..."></div>
+    <div class="topbar-spacer"></div>
+    <button class="icon-btn" title="Notificações">${I.bell}<span class="dot-badge"></span></button>
+    <button class="theme-toggle" onclick="app.toggleTheme()" title="Alternar tema">
+      <span class="knob">${state.theme==='dark'?I.moon:I.sun}</span>
+    </button>
+    <div class="avatar-wrap">
+      <div class="avatar">MC</div>
+      <div><div class="avatar-name">Você</div><div class="avatar-role">Vendedor(a)</div></div>
+      ${I.chevronDown}
+    </div>
+  </div>`;
+}
+
+/* =============== RENDER: DASHBOARD =============== */
+function renderDashboard(d){
+  const needsOnboarding = state.percentuais.length===0 || state.produtos.length===0;
+  const hasComparison = d.anterior.valor>0 || d.anterior.comissao>0;
+  const vendasChange = d.pctChange(d.atual.valor, d.anterior.valor);
+  const comissaoChange = d.pctChange(d.atual.comissao, d.anterior.comissao);
+  const trend = (v) => `<span class="trend" style="color:${v>=0?'var(--success)':'var(--danger)'}">${v>=0?I.trendUp:I.trendDown}${Math.abs(v).toFixed(0)}% vs mês anterior</span>`;
+
+  const onboarding = needsOnboarding ? `
+    <div class="card card-pad" style="text-align:center; border-style:dashed; margin-bottom:20px;">
+      <h3 style="font-size:19px; margin-bottom:8px;">Vamos começar 👋</h3>
+      <p style="color:var(--text-dim); margin:0 0 18px; font-size:14.5px;">Antes do primeiro pedido, cadastre um percentual de comissão e uma chapa de MDF.</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="app.setScreen('percentuais')">1. Adicionar percentual</button>
+        <button class="btn btn-ghost" onclick="app.setScreen('produtos')">2. Adicionar chapa</button>
+      </div>
+    </div>` : '';
+
+  const statCards = `
+    <div class="grid" style="grid-template-columns:1fr 1fr; margin-bottom:16px;">
+      <div class="card card-pad">
+        <div class="icon-tile" style="background:var(--warn-soft); color:var(--warn);">${I.coin}</div>
+        <div style="font-size:13px; color:var(--text-faint); font-weight:600; margin-top:14px;">Vendido este mês</div>
+        <div class="num" style="font-size:23px; font-weight:700; margin-top:3px;">${fmtBRL(d.atual.valor)}</div>
+        ${hasComparison ? `<div style="margin-top:8px;">${trend(vendasChange)}</div>` : ''}
+      </div>
+      <div class="card card-pad">
+        <div class="icon-tile" style="background:var(--success-soft); color:var(--success);">${I.percent}</div>
+        <div style="font-size:13px; color:var(--text-faint); font-weight:600; margin-top:14px;">Comissão este mês</div>
+        <div class="num" style="font-size:23px; font-weight:700; margin-top:3px;">${fmtBRL(d.atual.comissao)}</div>
+        ${hasComparison ? `<div style="margin-top:8px;">${trend(comissaoChange)}</div>` : ''}
+      </div>
+    </div>`;
+
+  const listsRow = `
+    <div class="card card-pad" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+        <div class="section-title" style="margin:0;">Pedidos recentes</div>
+        ${d.allSorted.length ? `<a href="#" onclick="app.setScreen('pedidos'); return false;" style="color:var(--accent); font-weight:700; font-size:13.5px; text-decoration:none; display:flex; align-items:center; gap:4px;">Ver todos ${I.arrowRight}</a>` : ''}
+      </div>
+      ${d.allSorted.length===0 ? `<div class="empty">Nenhum pedido registrado ainda.</div>` :
+        d.allSorted.slice(0,4).map(p=>`
+          <div class="list-row">
+            <div style="min-width:0;">
+              <div style="font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.cliente}</div>
+              <div style="font-size:13px; color:var(--text-faint); margin-top:2px;">${p.produtoNome} · ${p.dataFmt}</div>
+            </div>
+            <div style="text-align:right; flex:none;">
+              <div class="num" style="font-weight:800; font-size:15px;">${p.valorFmt}</div>
+              <div class="num" style="font-size:12.5px; color:var(--success); font-weight:700;">+${p.comissaoFmt}</div>
+            </div>
+          </div>`).join('')}
+    </div>`;
+
+  const trendCard = `
+    <div class="card card-pad">
+      <div class="section-title">Vendas ao longo do ano</div>
+      ${lineChart(d.last12)}
+    </div>`;
+
+  return `
+    <div class="page-head">
+      <div><h1 class="page-title">Olá! Aqui está seu resumo</h1><div class="page-sub">${monthLabel(d.nowKey)}</div></div>
+      <button class="btn btn-primary" onclick="app.setScreen('novo')">${I.plus}Registrar novo pedido</button>
+    </div>
+    ${onboarding}${statCards}${listsRow}${trendCard}
+  `;
+}
+
+/* =============== RENDER: NOVO PEDIDO =============== */
+function renderNovo(d){
+  const semProdutos = state.produtos.length===0;
+  if(semProdutos){
+    return `
+      <div class="page-head"><h1 class="page-title">${state.pedEditingId?'Editar Pedido':'Novo Pedido'}</h1></div>
+      <div class="card card-pad" style="text-align:center;">
+        <p style="font-size:16px; font-weight:700; margin:0 0 16px;">Cadastre uma chapa de MDF antes de registrar um pedido.</p>
+        <button class="btn btn-primary" onclick="app.setScreen('produtos')">Adicionar chapa</button>
+      </div>`;
+  }
+  const f = state.pedForm;
+  const prod = state.produtos.find(p=>p.id===f.produtoId);
+  const pct = state.percentuais.find(p=>p.id===f.percentualId);
+  const pedValor = prod ? computeValor(f.m2, prod.valorPorM2) : 0;
+  const pedComissao = pct ? computeComissao(pedValor, pct.valor) : 0;
+  const valid = !!(f.cliente.trim() && prod && parseFloat(f.m2)>0 && pct && f.data);
+
+  return `
+    <div class="page-head"><h1 class="page-title">${state.pedEditingId?'Editar Pedido':'Novo Pedido'}</h1></div>
+    <div class="card card-pad" style="max-width:640px; display:flex; flex-direction:column; gap:18px;">
+      <div class="field">
+        <label>Nome do cliente</label>
+        <input id="ped-cliente" type="text" value="${f.cliente.replace(/"/g,'&quot;')}" oninput="app.updatePedPreview()" placeholder="Ex: Marcenaria Bom Sucesso">
+      </div>
+      <div class="field">
+        <label>Chapa de MDF</label>
+        <select id="ped-produto" onchange="app.onProdutoChangePed()">
+          <option value="">Selecione a chapa</option>
+          ${state.produtos.map(p=>`<option value="${p.id}" ${p.id===f.produtoId?'selected':''}>${p.nome}</option>`).join('')}
+        </select>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field">
+          <label>Quantos m²?</label>
+          <input id="ped-m2" type="number" min="0" step="0.01" value="${f.m2}" oninput="app.updatePedPreview()" placeholder="0,00">
+        </div>
+        <div class="field">
+          <label>Data</label>
+          <input id="ped-data" type="date" value="${f.data}" onchange="app.updatePedPreview()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Percentual de comissão nesta venda</label>
+        <select id="ped-percentual" onchange="app.onPercentualChangePed()">
+          ${state.percentuais.map(p=>`<option value="${p.id}" ${p.id===f.percentualId?'selected':''}>${p.descricao} (${fmtPercent(p.valor)})</option>`).join('')}
+        </select>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr; background:var(--surface-2); border-radius:14px; padding:18px;">
+        <div>
+          <div style="font-size:13px; color:var(--text-faint); font-weight:600;">Valor do pedido</div>
+          <div id="ped-valor-preview" class="num" style="font-size:22px; font-weight:800; margin-top:4px;">${fmtBRL(pedValor)}</div>
+        </div>
+        <div>
+          <div style="font-size:13px; color:var(--text-faint); font-weight:600;">Sua comissão</div>
+          <div id="ped-comissao-preview" class="num" style="font-size:22px; font-weight:800; margin-top:4px; color:var(--success);">${fmtBRL(pedComissao)}</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button id="ped-save-btn" class="btn btn-primary" style="flex:1; min-width:200px;" ${valid?'':'disabled'} onclick="app.savePed()">${state.pedEditingId?'Salvar alterações':'Salvar pedido'}</button>
+        ${state.pedEditingId ? `<button class="btn btn-ghost" onclick="app.cancelPed()">Cancelar</button>` : ''}
+      </div>
+    </div>`;
+}
+
+/* =============== RENDER: PEDIDOS (histórico) =============== */
+function renderPedidos(d){
+  return `
+    <div class="page-head"><h1 class="page-title">Meus Pedidos</h1><div class="page-sub">Histórico completo, do mais recente ao mais antigo</div></div>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap;">
+      <label style="font-size:14px; font-weight:700; color:var(--text-dim);">Filtrar por mês:</label>
+      <select id="filtro-mes" onchange="app.setFiltroMes()" style="padding:11px 14px; font-size:14.5px; border-radius:10px; border:1.5px solid var(--border); background:var(--surface); font-weight:600; appearance:none;">
+        <option value="todos">Todos os meses</option>
+        ${d.mesesDisponiveis.map(m=>`<option value="${m.key}" ${m.key===state.filtroMes?'selected':''}>${m.label}</option>`).join('')}
+      </select>
+    </div>
+    ${d.filteredPedidos.length===0 ? `<div class="empty">Nenhum pedido neste período.</div>` :
+      d.filteredPedidos.map(p=>`
+        <div class="list-row" style="flex-direction:column; align-items:stretch; gap:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+            <div style="min-width:0;">
+              <div style="font-weight:800; font-size:16.5px;">${p.cliente}</div>
+              <div style="font-size:13.5px; color:var(--text-faint); margin-top:2px;">${p.produtoNome} · ${p.dataFmt}</div>
+            </div>
+            <div style="display:flex; gap:6px; flex:none;">
+              <button class="icon-action edit" onclick="app.editPed('${p.id}')">${I.edit}</button>
+              <button class="icon-action danger" onclick="app.deletePed('${p.id}')">${I.trash}</button>
+            </div>
+          </div>
+          <div style="display:flex; gap:22px; flex-wrap:wrap; border-top:1px solid var(--border-soft); padding-top:10px;">
+            <div><div style="font-size:11.5px; color:var(--text-faint); font-weight:600;">M²</div><div class="num" style="font-size:14.5px; font-weight:700;">${p.m2Fmt}</div></div>
+            <div><div style="font-size:11.5px; color:var(--text-faint); font-weight:600;">Valor</div><div class="num" style="font-size:14.5px; font-weight:700;">${p.valorFmt}</div></div>
+            <div><div style="font-size:11.5px; color:var(--text-faint); font-weight:600;">Percentual</div><div class="num" style="font-size:14.5px; font-weight:700;">${p.percentualFmt}</div></div>
+            <div><div style="font-size:11.5px; color:var(--text-faint); font-weight:600;">Comissão</div><div class="num" style="font-size:14.5px; font-weight:800; color:var(--success);">${p.comissaoFmt}</div></div>
+          </div>
+        </div>`).join('')}`;
+}
+
+/* =============== RENDER: PRODUTOS (chapas) =============== */
+function renderProdutos(d){
+  const f = state.prodForm;
+  const valido = !!(f.nome.trim() && parseFloat(f.valorPorM2)>0 && f.percentualComissaoId);
+  return `
+    <div class="page-head"><h1 class="page-title">Minhas Chapas</h1><div class="page-sub">Cadastre e edite suas chapas de MDF</div></div>
+    <div class="card card-pad" style="margin-bottom:20px;">
+      <div class="section-title">${state.prodEditingId?'Editar chapa':'Adicionar chapa'}</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="field">
+          <label>Nome da chapa</label>
+          <input id="prod-nome" type="text" value="${f.nome.replace(/"/g,'&quot;')}" placeholder="Ex: MDF Branco 15mm">
+        </div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="field">
+            <label>Valor por m² (R$)</label>
+            <input id="prod-valor" type="number" min="0" step="0.01" value="${f.valorPorM2}" placeholder="0,00">
+          </div>
+          <div class="field">
+            <label>Comissão padrão</label>
+            <select id="prod-percentual">
+              <option value="">Selecione</option>
+              ${state.percentuais.map(p=>`<option value="${p.id}" ${p.id===f.percentualComissaoId?'selected':''}>${p.descricao} (${fmtPercent(p.valor)})</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button class="btn btn-primary" style="flex:1;" onclick="app.saveProd()">${state.prodEditingId?'Salvar alterações':'Adicionar chapa'}</button>
+          ${state.prodEditingId ? `<button class="btn btn-ghost" onclick="app.cancelProd()">Cancelar</button>` : ''}
+        </div>
+      </div>
+    </div>
+    ${state.percentuais.length===0 ? `<div class="toast" style="background:var(--warn-soft); border-color:var(--warn); color:var(--warn);">Cadastre um percentual de comissão primeiro, na seção "Comissões".</div>` : ''}
+    <div class="section-title">Chapas cadastradas</div>
+    ${state.produtos.length===0 ? `<div class="empty">Nenhuma chapa cadastrada ainda.</div>` :
+      state.produtos.map(p=>{
+        const pc = d.pctById(p.percentualComissaoId);
+        return `
+        <div class="list-row">
+          <div style="min-width:0;">
+            <div style="font-weight:700; font-size:15.5px;">${p.nome}</div>
+            <div style="font-size:13px; color:var(--text-faint); margin-top:2px;">${fmtBRL(p.valorPorM2)} por m² · comissão padrão ${pc?`${pc.descricao} (${fmtPercent(pc.valor)})`:'—'}</div>
+          </div>
+          <div style="display:flex; gap:6px; flex:none;">
+            <button class="icon-action edit" onclick="app.editProd('${p.id}')">${I.edit}</button>
+            <button class="icon-action danger" onclick="app.deleteProd('${p.id}')">${I.trash}</button>
+          </div>
+        </div>`;
+      }).join('')}`;
+}
+
+/* =============== RENDER: PERCENTUAIS (comissões) =============== */
+function renderPercentuais(d){
+  const f = state.pctForm;
+  return `
+    <div class="page-head"><h1 class="page-title">Percentuais de Comissão</h1><div class="page-sub">Percentuais disponíveis para usar nos pedidos</div></div>
+    <div class="card card-pad" style="margin-bottom:20px;">
+      <div class="section-title">${state.pctEditingId?'Editar percentual':'Adicionar percentual'}</div>
+      <div class="grid" style="grid-template-columns:2fr 1fr; margin-bottom:16px;">
+        <div class="field">
+          <label>Descrição</label>
+          <input id="pct-descricao" type="text" value="${f.descricao.replace(/"/g,'&quot;')}" placeholder="Ex: Padrão, Promoção">
+        </div>
+        <div class="field">
+          <label>Valor (%)</label>
+          <input id="pct-valor" type="number" min="0" max="100" step="0.5" value="${f.valor}" placeholder="0">
+        </div>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="app.savePct()">${state.pctEditingId?'Salvar alterações':'Adicionar percentual'}</button>
+        ${state.pctEditingId ? `<button class="btn btn-ghost" onclick="app.cancelPct()">Cancelar</button>` : ''}
+      </div>
+    </div>
+    <div class="section-title">Percentuais cadastrados</div>
+    ${state.percentuais.length===0 ? `<div class="empty">Nenhum percentual cadastrado ainda.</div>` :
+      state.percentuais.map(p=>`
+        <div class="list-row">
+          <div style="min-width:0;">
+            <div style="font-weight:700; font-size:15.5px;">${p.descricao}</div>
+            <div class="num" style="font-size:14px; color:var(--accent); font-weight:700; margin-top:2px;">${fmtPercent(p.valor)}</div>
+          </div>
+          <div style="display:flex; gap:6px; flex:none;">
+            <button class="icon-action edit" onclick="app.editPct('${p.id}')">${I.edit}</button>
+            <button class="icon-action danger" onclick="app.deletePct('${p.id}')">${I.trash}</button>
+          </div>
+        </div>`).join('')}`;
+}
+
+/* =============== MASTER RENDER =============== */
+const TITLES = {
+  dashboard:{title:'Olá! Aqui está seu resumo'}, novo:{title:'Novo Pedido'},
+  pedidos:{title:'Meus Pedidos'}, produtos:{title:'Minhas Chapas'}, percentuais:{title:'Percentuais de Comissão'},
+};
+
+function render(){
+  const d = computeDerived();
+  let body;
+  if(state.screen==='dashboard') body = renderDashboard(d);
+  else if(state.screen==='novo') body = renderNovo(d);
+  else if(state.screen==='pedidos') body = renderPedidos(d);
+  else if(state.screen==='produtos') body = renderProdutos(d);
+  else body = renderPercentuais(d);
+
+  document.getElementById('root').innerHTML = `
+    <div class="shell">
+      ${renderSidebar()}
+      <div class="main">
+        ${renderTopbar(TITLES)}
+        <div class="content">
+          ${state.toast ? `<div class="toast" id="toast-msg">${state.toast}</div>` : ''}
+          ${body}
+        </div>
+      </div>
+    </div>`;
+}
+function renderToastOnly(){
+  const el = document.getElementById('toast-msg');
+  if(el) el.remove();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  render();
+});
+</script>
+</body>
+</html>
