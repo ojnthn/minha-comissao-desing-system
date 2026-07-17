@@ -13,7 +13,7 @@ export function PedidoSummaryRow({ cliente, produtoNome, dataFmt, valorFmt, comi
     <div
       style={{
         background: colors.background.surface,
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         borderRadius: radius[14],
         padding: `${spacing[16]} ${spacing[18]}`,
         display: 'flex',
@@ -34,13 +34,13 @@ export function PedidoSummaryRow({ cliente, produtoNome, dataFmt, valorFmt, comi
         >
           {cliente}
         </div>
-        <div style={{ fontSize: fontSize['13.5'], color: colors.text.muted, marginTop: spacing[2] }}>
+        <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, marginTop: spacing[2] }}>
           {produtoNome} · {dataFmt}
         </div>
       </div>
       <div style={{ textAlign: 'right', flex: 'none' }}>
         <div style={{ fontWeight: fontWeight.extrabold, fontSize: fontSize[16] }}>{valorFmt}</div>
-        <div style={{ fontSize: fontSize[13], color: colors.success.trend, fontWeight: fontWeight.bold }}>
+        <div style={{ fontSize: fontSize[13], color: colors.success.text, fontWeight: fontWeight.bold }}>
           +{comissaoFmt}
         </div>
       </div>

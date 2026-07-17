@@ -9,9 +9,9 @@ export interface ToastProps {
 }
 
 const variantStyles: Record<ToastVariant, { background: string; border: string; color: string }> = {
-  success: { background: colors.success.background, border: colors.success.border, color: colors.success.text },
-  danger: { background: colors.danger.background, border: colors.danger.border, color: colors.danger.text },
-  warning: { background: colors.warning.background, border: colors.warning.border, color: colors.warning.text },
+  success: { background: colors.success.soft, border: colors.success.text, color: colors.success.text },
+  danger: { background: colors.danger.soft, border: colors.danger.text, color: colors.danger.text },
+  warning: { background: colors.warning.soft, border: colors.warning.text, color: colors.warning.text },
 };
 
 export function Toast({ variant = 'success', children }: ToastProps) {

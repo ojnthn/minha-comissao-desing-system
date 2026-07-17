@@ -33,7 +33,7 @@ export function PercentualForm({
         background: colors.background.surface,
         borderRadius: radius[18],
         padding: spacing[22],
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         marginBottom: spacing[20],
       }}
     >

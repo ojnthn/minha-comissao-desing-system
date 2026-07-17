@@ -8,7 +8,7 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 }
 
 const sizeStyles: Record<SelectSize, { padding: string; borderRadius: string; background: string; fontWeight: number }> = {
-  md: { padding: `${spacing[15]} ${spacing[16]}`, borderRadius: radius[12], background: colors.background.input, fontWeight: fontWeight.semibold },
+  md: { padding: `${spacing[15]} ${spacing[16]}`, borderRadius: radius[12], background: colors.background.elevated, fontWeight: fontWeight.semibold },
   sm: { padding: `${spacing[11]} ${spacing[14]}`, borderRadius: radius[10], background: colors.background.surface, fontWeight: fontWeight.bold },
 };
 
@@ -31,8 +31,8 @@ export function Select({ size = 'md', disabled = false, onFocus, onBlur, style, 
         fontFamily: 'inherit',
         fontSize: fontSize[15],
         color: colors.text.primary,
-        border: `1.5px solid ${isFocused ? colors.brand.primary : colors.border.input}`,
-        outline: isFocused ? `2px solid ${colors.brand.primary}` : 'none',
+        border: `1.5px solid ${isFocused ? colors.accent.default : colors.border.default}`,
+        outline: isFocused ? `2px solid ${colors.accent.default}` : 'none',
         outlineOffset: '2px',
         cursor: disabled ? 'not-allowed' : 'pointer',
         padding: sizeStyle.padding,

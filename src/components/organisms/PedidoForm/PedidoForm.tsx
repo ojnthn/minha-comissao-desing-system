@@ -76,7 +76,7 @@ export function PedidoForm({
         background: colors.background.surface,
         borderRadius: radius[18],
         padding: `${spacing[26]} ${spacing[22]}`,
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         display: 'flex',
         flexDirection: 'column',
         gap: spacing[18],
@@ -137,13 +137,13 @@ export function PedidoForm({
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: spacing[14],
-          background: colors.background.highlight,
+          background: colors.background.surfaceAlt,
           borderRadius: radius[14],
           padding: spacing[18],
         }}
       >
         <div>
-          <div style={{ fontSize: fontSize['13.5'], color: colors.text.muted, fontWeight: fontWeight.semibold }}>
+          <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, fontWeight: fontWeight.semibold }}>
             Valor do pedido
           </div>
           <div style={{ fontSize: fontSize[23], fontWeight: fontWeight.extrabold, marginTop: spacing[4] }}>
@@ -151,7 +151,7 @@ export function PedidoForm({
           </div>
         </div>
         <div>
-          <div style={{ fontSize: fontSize['13.5'], color: colors.text.muted, fontWeight: fontWeight.semibold }}>
+          <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, fontWeight: fontWeight.semibold }}>
             Sua comissão
           </div>
           <div
@@ -159,7 +159,7 @@ export function PedidoForm({
               fontSize: fontSize[23],
               fontWeight: fontWeight.extrabold,
               marginTop: spacing[4],
-              color: colors.success.trend,
+              color: colors.success.text,
             }}
           >
             {pedComissaoFmt}

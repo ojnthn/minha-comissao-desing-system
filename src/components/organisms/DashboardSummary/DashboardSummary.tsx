@@ -72,7 +72,7 @@ export function DashboardSummary({
               event.preventDefault();
               onVerTodos();
             }}
-            style={{ color: colors.brand.primary, fontWeight: fontWeight.bold, fontSize: fontSize[14], textDecoration: 'none' }}
+            style={{ color: colors.accent.default, fontWeight: fontWeight.bold, fontSize: fontSize[14], textDecoration: 'none' }}
           >
             Ver todos →
           </a>

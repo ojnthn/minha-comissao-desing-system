@@ -9,11 +9,11 @@ export function EmptyState({ message }: EmptyStateProps) {
     <div
       style={{
         background: colors.background.surface,
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         borderRadius: radius[14],
         padding: spacing[26],
         textAlign: 'center',
-        color: colors.text.muted,
+        color: colors.text.faint,
         fontSize: fontSize[15],
       }}
     >

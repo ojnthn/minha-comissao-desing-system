@@ -11,7 +11,7 @@ export interface ProdutoListItemProps {
 
 const EditIcon = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke={colors.brand.primary} strokeWidth="2" strokeLinejoin="round" />
+    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke={colors.accent.default} strokeWidth="2" strokeLinejoin="round" />
   </svg>
 );
 
@@ -34,7 +34,7 @@ export function ProdutoListItem({ nome, valorFmt, percentualLabel, onEdit, onDel
         background: colors.background.surface,
         borderRadius: radius[14],
         padding: `${spacing[16]} ${spacing[18]}`,
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -43,7 +43,7 @@ export function ProdutoListItem({ nome, valorFmt, percentualLabel, onEdit, onDel
     >
       <div style={{ minWidth: 0 }}>
         <div style={{ fontWeight: fontWeight.bold, fontSize: fontSize[16] }}>{nome}</div>
-        <div style={{ fontSize: fontSize['13.5'], color: colors.text.muted, marginTop: spacing[2] }}>
+        <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, marginTop: spacing[2] }}>
           {valorFmt} por m² · comissão padrão {percentualLabel}
         </div>
       </div>

@@ -13,9 +13,9 @@ export interface IconButtonProps
 }
 
 const variantStyles: Record<IconButtonVariant, { background: string; border: string; boxShadow: string }> = {
-  default: { background: colors.background.input, border: `1.5px solid ${colors.border.input}`, boxShadow: 'none' },
-  danger: { background: colors.danger.background, border: `1.5px solid ${colors.danger.border}`, boxShadow: 'none' },
-  dark: { background: colors.brand.dark, border: 'none', boxShadow: shadows.floatingButton },
+  default: { background: colors.background.elevated, border: `1.5px solid ${colors.border.default}`, boxShadow: 'none' },
+  danger: { background: colors.danger.soft, border: `1.5px solid ${colors.danger.text}`, boxShadow: 'none' },
+  dark: { background: colors.accent.strong, border: 'none', boxShadow: shadows.card },
 };
 
 const sizeStyles: Record<IconButtonSize, { dimension: string; borderRadius: string }> = {

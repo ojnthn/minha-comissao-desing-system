@@ -54,7 +54,7 @@ export function AppShellTemplate({
           <div>
             <div style={{ fontSize: fontSize[26], fontWeight: fontWeight.extrabold }}>{title}</div>
             {subtitle && (
-              <div style={{ fontSize: fontSize[15], color: colors.text.muted, marginTop: spacing[2] }}>
+              <div style={{ fontSize: fontSize[15], color: colors.text.faint, marginTop: spacing[2] }}>
                 {subtitle}
               </div>
             )}

@@ -6,4 +6,5 @@ export const radius = {
   14: '14px',
   16: '16px',
   18: '18px',
+  20: '20px',
 } as const;

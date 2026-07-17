@@ -14,9 +14,9 @@ const arrowByDirection: Record<TrendDirection, string> = {
 };
 
 const colorByDirection: Record<TrendDirection, string> = {
-  up: colors.success.trend,
+  up: colors.success.text,
   down: colors.danger.text,
-  neutral: colors.neutralTrend,
+  neutral: colors.text.faint,
 };
 
 export function TrendIndicator({ direction, label }: TrendIndicatorProps) {

@@ -1,4 +1,6 @@
-export const fontFamily = "'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif";
+export const fontFamily = "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif";
+export const fontFamilyDisplay = "'Fraunces', serif";
+export const fontFamilyMono = "'IBM Plex Mono', ui-monospace, monospace";
 
 export const fontSize = {
   12: '12px',
@@ -14,6 +16,7 @@ export const fontSize = {
   20: '20px',
   23: '23px',
   26: '26px',
+  27: '27px',
   28: '28px',
 } as const;
 

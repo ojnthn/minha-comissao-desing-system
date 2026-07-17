@@ -1,9 +1,65 @@
 :root {
   color-scheme: light dark;
+
+  /* tema dark (padrão) — ver docs/DECISIONS.md, 2026-07-17 */
+  --bg: #121009;
+  --bg-elevated: #1a160f;
+  --surface: #1f1a12;
+  --surface-2: #262016;
+  --border: #33291a;
+  --border-soft: #241f16;
+  --text: #f3ece0;
+  --text-dim: #b3a68f;
+  --text-faint: #8a7d68;
+  --accent: #e0a458;
+  --accent-strong: #f0b876;
+  --accent-ink: #1a1206;
+  --accent-soft: rgba(224, 164, 88, 0.14);
+  --success: #7bb283;
+  --success-soft: rgba(123, 178, 131, 0.14);
+  --info: #6fa8c9;
+  --info-soft: rgba(111, 168, 201, 0.14);
+  --warn: #cf8f63;
+  --warn-soft: rgba(207, 143, 99, 0.14);
+  --danger: #c9695f;
+  --danger-soft: rgba(201, 105, 95, 0.14);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -16px rgba(0, 0, 0, 0.55);
+}
+
+html[data-theme='light'] {
+  --bg: #faf6ee;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4ecdd;
+  --border: #e7dbc4;
+  --border-soft: #efe6d4;
+  --text: #2a2216;
+  --text-dim: #6c5c44;
+  --text-faint: #9c8b6d;
+  --accent: #b8792f;
+  --accent-strong: #96611f;
+  --accent-ink: #fff9ef;
+  --accent-soft: rgba(184, 121, 47, 0.12);
+  --success: #3f7a49;
+  --success-soft: rgba(63, 122, 73, 0.12);
+  --info: #3c73a0;
+  --info-soft: rgba(60, 115, 160, 0.12);
+  --warn: #a85f37;
+  --warn-soft: rgba(168, 95, 55, 0.12);
+  --danger: #a13f36;
+  --danger-soft: rgba(161, 63, 54, 0.12);
+  --shadow: 0 1px 2px rgba(40, 30, 10, 0.06), 0 12px 28px -18px rgba(40, 30, 10, 0.18);
 }
 
 body {
   margin: 0;
   /* mantenha igual a fontFamily em src/tokens/typography.ts */
-  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* mantenha igual a fontFamilyDisplay em src/tokens/typography.ts */
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', serif;
 }

@@ -15,9 +15,9 @@ export interface ButtonProps
 }
 
 const variantStyles: Record<ButtonVariant, { background: string; color: string }> = {
-  primary: { background: colors.brand.primary, color: colors.text.onDark },
-  dark: { background: colors.brand.dark, color: colors.text.onDark },
-  secondary: { background: colors.cancel.background, color: colors.cancel.text },
+  primary: { background: colors.accent.default, color: colors.text.onAccent },
+  dark: { background: colors.accent.strong, color: colors.text.onAccent },
+  secondary: { background: colors.background.surfaceAlt, color: colors.text.primary },
 };
 
 const sizeStyles: Record<ButtonSize, { padding: string; fontSize: string; borderRadius: string }> = {
@@ -53,7 +53,7 @@ export function Button({
         cursor: disabled ? 'not-allowed' : 'pointer',
         fontWeight: fontWeight.extrabold,
         fontFamily: 'inherit',
-        background: disabled ? colors.disabled : variantStyle.background,
+        background: disabled ? colors.background.surfaceAlt : variantStyle.background,
         color: variantStyle.color,
         padding: sizeStyle.padding,
         fontSize: sizeStyle.fontSize,

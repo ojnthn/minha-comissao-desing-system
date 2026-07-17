@@ -18,7 +18,7 @@ export function OnboardingCard({ title, description, actions }: OnboardingCardPr
     <div
       style={{
         background: colors.background.surface,
-        border: `2px dashed ${colors.border.dashed}`,
+        border: `2px dashed ${colors.border.default}`,
         borderRadius: radius[16],
         padding: title ? `${spacing[32]} ${spacing[24]}` : spacing[28],
         textAlign: 'center',
@@ -33,7 +33,7 @@ export function OnboardingCard({ title, description, actions }: OnboardingCardPr
         style={{
           fontSize: title ? fontSize[16] : fontSize[17],
           fontWeight: title ? fontWeight.semibold : fontWeight.bold,
-          color: title ? colors.text.mutedStrong : colors.text.primary,
+          color: title ? colors.text.dim : colors.text.primary,
           marginBottom: title ? spacing[20] : spacing[14],
           lineHeight: 1.5,
         }}

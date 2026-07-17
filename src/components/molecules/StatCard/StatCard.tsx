@@ -21,11 +21,11 @@ export function StatCard({ label, value, tone = 'light', trend }: StatCardProps)
   return (
     <div
       style={{
-        background: isDark ? colors.brand.dark : colors.background.surface,
-        border: isDark ? 'none' : `1px solid ${colors.border.light}`,
+        background: isDark ? colors.accent.strong : colors.background.surface,
+        border: isDark ? 'none' : `1px solid ${colors.border.soft}`,
         borderRadius: radius[16],
         padding: spacing[22],
-        color: isDark ? colors.text.onDark : colors.text.primary,
+        color: isDark ? colors.text.onAccent : colors.text.primary,
       }}
     >
       <div
@@ -33,7 +33,7 @@ export function StatCard({ label, value, tone = 'light', trend }: StatCardProps)
           fontSize: fontSize[14],
           fontWeight: fontWeight.semibold,
           marginBottom: spacing[6],
-          color: isDark ? colors.text.onDarkMuted : colors.text.muted,
+          color: isDark ? colors.text.dim : colors.text.faint,
         }}
       >
         {label}

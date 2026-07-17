@@ -10,7 +10,7 @@ export interface PercentualListItemProps {
 
 const EditIcon = (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke={colors.brand.primary} strokeWidth="2" strokeLinejoin="round" />
+    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke={colors.accent.default} strokeWidth="2" strokeLinejoin="round" />
   </svg>
 );
 
@@ -33,7 +33,7 @@ export function PercentualListItem({ descricao, valorFmt, onEdit, onDelete }: Pe
         background: colors.background.surface,
         borderRadius: radius[14],
         padding: `${spacing[16]} ${spacing[18]}`,
-        border: `1px solid ${colors.border.light}`,
+        border: `1px solid ${colors.border.soft}`,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -42,7 +42,7 @@ export function PercentualListItem({ descricao, valorFmt, onEdit, onDelete }: Pe
     >
       <div style={{ minWidth: 0 }}>
         <div style={{ fontWeight: fontWeight.bold, fontSize: fontSize[16] }}>{descricao}</div>
-        <div style={{ fontSize: fontSize[14], color: colors.brand.primary, fontWeight: fontWeight.bold, marginTop: spacing[2] }}>
+        <div style={{ fontSize: fontSize[14], color: colors.accent.default, fontWeight: fontWeight.bold, marginTop: spacing[2] }}>
           {valorFmt}
         </div>
       </div>
