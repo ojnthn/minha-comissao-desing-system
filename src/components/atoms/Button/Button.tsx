@@ -21,8 +21,8 @@ const variantStyles: Record<ButtonVariant, { background: string; color: string }
 };
 
 const sizeStyles: Record<ButtonSize, { padding: string; fontSize: string; borderRadius: string }> = {
-  md: { padding: `${spacing[16]} ${spacing[22]}`, fontSize: fontSize[16], borderRadius: radius[12] },
-  lg: { padding: `${spacing[20]} ${spacing[24]}`, fontSize: fontSize[18], borderRadius: radius[14] },
+  md: { padding: `${spacing[13]} ${spacing[20]}`, fontSize: fontSize['14.5'], borderRadius: radius[12] },
+  lg: { padding: `${spacing[16]} ${spacing[26]}`, fontSize: fontSize[16], borderRadius: radius[14] },
 };
 
 export function Button({
@@ -47,14 +47,14 @@ export function Button({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: spacing[10],
+        gap: spacing[9],
         width: fullWidth ? '100%' : undefined,
         border: 'none',
         cursor: disabled ? 'not-allowed' : 'pointer',
-        fontWeight: fontWeight.extrabold,
+        fontWeight: fontWeight.bold,
         fontFamily: 'inherit',
         background: disabled ? colors.background.surfaceAlt : variantStyle.background,
-        color: variantStyle.color,
+        color: disabled ? colors.text.faint : variantStyle.color,
         padding: sizeStyle.padding,
         fontSize: sizeStyle.fontSize,
         borderRadius: sizeStyle.borderRadius,
