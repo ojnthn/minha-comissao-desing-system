@@ -2,7 +2,7 @@ import { FormField } from '../../molecules/FormField';
 import { FormFieldSelect } from '../../molecules/FormFieldSelect';
 import { Button } from '../../atoms/Button';
 import { Toast } from '../../atoms/Toast';
-import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
+import { colors, fontFamilyDisplay, fontSize, fontWeight, radius, shadows, spacing } from '../../../tokens';
 
 export interface PercentualOption {
   id: string;
@@ -47,13 +47,14 @@ export function ProdutoForm({
       <div
         style={{
           background: colors.background.surface,
-          borderRadius: radius[18],
+          borderRadius: radius[20],
+          boxShadow: shadows.card,
           padding: spacing[22],
           border: `1px solid ${colors.border.soft}`,
           marginBottom: spacing[20],
         }}
       >
-        <div style={{ fontSize: fontSize[17], fontWeight: fontWeight.extrabold, marginBottom: spacing[16] }}>
+        <div style={{ fontFamily: fontFamilyDisplay, fontSize: fontSize[17], fontWeight: fontWeight.bold, marginBottom: spacing[16] }}>
           {title}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[14] }}>
