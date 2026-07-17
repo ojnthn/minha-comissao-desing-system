@@ -31,10 +31,10 @@ export function Toast({ variant = 'success', children }: ToastProps) {
           background: variantStyle.background,
           border: `1px solid ${variantStyle.border}`,
           color: variantStyle.color,
-          padding: `${spacing[14]} ${spacing[18]}`,
+          padding: `${spacing[13]} ${spacing[18]}`,
           borderRadius: radius[12],
-          fontSize: fontSize[15],
-          fontWeight: fontWeight.semibold,
+          fontSize: fontSize['14.5'],
+          fontWeight: fontWeight.bold,
           animation: 'mvToastFade 0.2s ease',
         }}
       >
