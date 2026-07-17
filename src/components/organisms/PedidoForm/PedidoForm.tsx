@@ -2,7 +2,7 @@ import { FormField } from '../../molecules/FormField';
 import { FormFieldSelect } from '../../molecules/FormFieldSelect';
 import { Button } from '../../atoms/Button';
 import { OnboardingCard } from '../OnboardingCard';
-import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
+import { colors, fontFamilyMono, fontSize, fontWeight, radius, shadows, spacing } from '../../../tokens';
 
 export interface ProdutoOption {
   id: string;
@@ -74,8 +74,9 @@ export function PedidoForm({
     <div
       style={{
         background: colors.background.surface,
-        borderRadius: radius[18],
-        padding: `${spacing[26]} ${spacing[22]}`,
+        borderRadius: radius[20],
+        boxShadow: shadows.card,
+        padding: spacing[22],
         border: `1px solid ${colors.border.soft}`,
         display: 'flex',
         flexDirection: 'column',
@@ -146,7 +147,7 @@ export function PedidoForm({
           <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, fontWeight: fontWeight.semibold }}>
             Valor do pedido
           </div>
-          <div style={{ fontSize: fontSize[23], fontWeight: fontWeight.extrabold, marginTop: spacing[4] }}>
+          <div style={{ fontFamily: fontFamilyMono, fontSize: fontSize[22], fontWeight: fontWeight.extrabold, marginTop: spacing[4] }}>
             {pedValorFmt}
           </div>
         </div>
@@ -156,7 +157,8 @@ export function PedidoForm({
           </div>
           <div
             style={{
-              fontSize: fontSize[23],
+              fontFamily: fontFamilyMono,
+              fontSize: fontSize[22],
               fontWeight: fontWeight.extrabold,
               marginTop: spacing[4],
               color: colors.success.text,
