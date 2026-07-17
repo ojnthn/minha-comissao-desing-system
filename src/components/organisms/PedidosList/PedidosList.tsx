@@ -19,7 +19,7 @@ export function PedidosList({ filtroMes, mesesDisponiveis, onFiltroMesChange, pe
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: spacing[12], marginBottom: spacing[18], flexWrap: 'wrap' }}>
-        <label style={{ fontSize: fontSize[15], fontWeight: fontWeight.bold, color: colors.text.dim }}>
+        <label style={{ fontSize: fontSize[14], fontWeight: fontWeight.bold, color: colors.text.dim }}>
           Filtrar por mês:
         </label>
         <Select size="sm" value={filtroMes} onChange={(event) => onFiltroMesChange(event.target.value)}>
@@ -34,7 +34,7 @@ export function PedidosList({ filtroMes, mesesDisponiveis, onFiltroMesChange, pe
 
       {pedidos.length === 0 && <EmptyState message="Nenhum pedido neste período." />}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[12] }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[10] }}>
         {pedidos.map((pedido) => (
           <PedidoListItem key={pedido.id} {...pedido} />
         ))}
