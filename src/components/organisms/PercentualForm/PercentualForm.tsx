@@ -1,6 +1,6 @@
 import { FormField } from '../../molecules/FormField';
 import { Button } from '../../atoms/Button';
-import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
+import { colors, fontFamilyDisplay, fontSize, fontWeight, radius, shadows, spacing } from '../../../tokens';
 
 export interface PercentualFormProps {
   title: string;
@@ -31,13 +31,14 @@ export function PercentualForm({
     <div
       style={{
         background: colors.background.surface,
-        borderRadius: radius[18],
+        borderRadius: radius[20],
+        boxShadow: shadows.card,
         padding: spacing[22],
         border: `1px solid ${colors.border.soft}`,
         marginBottom: spacing[20],
       }}
     >
-      <div style={{ fontSize: fontSize[17], fontWeight: fontWeight.extrabold, marginBottom: spacing[16] }}>
+      <div style={{ fontFamily: fontFamilyDisplay, fontSize: fontSize[17], fontWeight: fontWeight.bold, marginBottom: spacing[16] }}>
         {title}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: spacing[14], marginBottom: spacing[16] }}>
