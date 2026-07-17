@@ -4,4 +4,6 @@
 
 body {
   margin: 0;
+  /* mantenha igual a fontFamily em src/tokens/typography.ts */
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }

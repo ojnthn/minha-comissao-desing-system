@@ -1,4 +1,4 @@
-export const fontFamily = "system-ui, -apple-system, 'Segoe UI', sans-serif";
+export const fontFamily = "'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif";
 
 export const fontSize = {
   12: '12px',
