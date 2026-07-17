@@ -66,6 +66,9 @@ export type { OnboardingCardProps, OnboardingAction } from './components/organis
 export { Sidebar } from './components/organisms/Sidebar';
 export type { SidebarProps, SidebarScreen } from './components/organisms/Sidebar';
 
+export { Topbar } from './components/organisms/Topbar';
+export type { TopbarProps } from './components/organisms/Topbar';
+
 export { DashboardSummary } from './components/organisms/DashboardSummary';
 export type { DashboardSummaryProps, DashboardTrend } from './components/organisms/DashboardSummary';
 

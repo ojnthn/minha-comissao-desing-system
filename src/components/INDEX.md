@@ -21,6 +21,7 @@
 | StatCard | molecules | Cartão de métrica com valor e tendência opcional | src/components/molecules/StatCard |
 | OnboardingCard | organisms | Cartão tracejado de chamada para ação (onboarding/estado vazio) | src/components/organisms/OnboardingCard |
 | Sidebar | organisms | Navegação lateral colapsável com item ativo | src/components/organisms/Sidebar |
+| Topbar | organisms | Barra superior: busca, notificações, tema, usuário | src/components/organisms/Topbar |
 | PedidoSummaryRow | molecules | Linha compacta de pedido (dashboard) | src/components/molecules/PedidoSummaryRow |
 | PedidoListItem | molecules | Linha de pedido no histórico, com editar/excluir | src/components/molecules/PedidoListItem |
 | ProdutoListItem | molecules | Linha de chapa cadastrada, com editar/excluir | src/components/molecules/ProdutoListItem |
