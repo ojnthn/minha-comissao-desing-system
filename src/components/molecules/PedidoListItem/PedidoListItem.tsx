@@ -1,5 +1,5 @@
 import { IconButton } from '../../atoms/IconButton';
-import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
+import { colors, fontFamilyMono, fontSize, fontWeight, radius, spacing } from '../../../tokens';
 
 export interface PedidoListItemProps {
   cliente: string;
@@ -14,16 +14,16 @@ export interface PedidoListItemProps {
 }
 
 const EditIcon = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke={colors.accent.default} strokeWidth="2" strokeLinejoin="round" />
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
   </svg>
 );
 
 const DeleteIcon = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
     <path
       d="M5 7h14M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-8 0l1 13a1 1 0 001 1h6a1 1 0 001-1l1-13"
-      stroke={colors.danger.text}
+      stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -31,11 +31,20 @@ const DeleteIcon = (
   </svg>
 );
 
-function Stat({ label, value, valueColor }: { label: string; value: string; valueColor?: string }) {
+function Stat({ label, value, valueColor, bold }: { label: string; value: string; valueColor?: string; bold?: boolean }) {
   return (
     <div>
-      <div style={{ fontSize: fontSize[12], color: colors.text.faint, fontWeight: fontWeight.semibold }}>{label}</div>
-      <div style={{ fontSize: fontSize[15], fontWeight: fontWeight.bold, color: valueColor }}>{value}</div>
+      <div style={{ fontSize: fontSize['11.5'], color: colors.text.faint, fontWeight: fontWeight.semibold }}>{label}</div>
+      <div
+        style={{
+          fontFamily: fontFamilyMono,
+          fontSize: fontSize['14.5'],
+          fontWeight: bold ? fontWeight.extrabold : fontWeight.bold,
+          color: valueColor,
+        }}
+      >
+        {value}
+      </div>
     </div>
   );
 }
@@ -54,10 +63,13 @@ export function PedidoListItem({
   return (
     <div
       style={{
-        background: colors.background.surface,
-        borderRadius: radius[16],
-        padding: `${spacing[18]} ${spacing[20]}`,
+        background: colors.background.elevated,
+        borderRadius: radius[14],
+        padding: `${spacing[15]} ${spacing[18]}`,
         border: `1px solid ${colors.border.soft}`,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: spacing[12],
       }}
     >
       <div
@@ -66,24 +78,23 @@ export function PedidoListItem({
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           gap: spacing[12],
-          marginBottom: spacing[10],
         }}
       >
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontWeight: fontWeight.extrabold, fontSize: fontSize[17] }}>{cliente}</div>
-          <div style={{ fontSize: fontSize[14], color: colors.text.faint, marginTop: spacing[2] }}>
+          <div style={{ fontWeight: fontWeight.extrabold, fontSize: fontSize['16.5'] }}>{cliente}</div>
+          <div style={{ fontSize: fontSize['13.5'], color: colors.text.faint, marginTop: spacing[2] }}>
             {produtoNome} · {dataFmt}
           </div>
         </div>
         <div style={{ display: 'flex', gap: spacing[6], flex: 'none' }}>
-          <IconButton icon={EditIcon} aria-label="Editar" onClick={onEdit} />
-          <IconButton icon={DeleteIcon} variant="danger" aria-label="Excluir" onClick={onDelete} />
+          <IconButton icon={EditIcon} variant="edit" size="sm" aria-label="Editar" onClick={onEdit} />
+          <IconButton icon={DeleteIcon} variant="danger" size="sm" aria-label="Excluir" onClick={onDelete} />
         </div>
       </div>
       <div
         style={{
           display: 'flex',
-          gap: spacing[18],
+          gap: spacing[22],
           flexWrap: 'wrap',
           borderTop: `1px solid ${colors.border.soft}`,
           paddingTop: spacing[10],
@@ -92,7 +103,7 @@ export function PedidoListItem({
         <Stat label="M²" value={m2Fmt} />
         <Stat label="Valor" value={valorFmt} />
         <Stat label="Percentual" value={percentualFmt} />
-        <Stat label="Comissão" value={comissaoFmt} valueColor={colors.success.text} />
+        <Stat label="Comissão" value={comissaoFmt} valueColor={colors.success.text} bold />
       </div>
     </div>
   );
