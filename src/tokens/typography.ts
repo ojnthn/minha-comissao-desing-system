@@ -4,6 +4,7 @@ export const fontFamilyMono = "'IBM Plex Mono', ui-monospace, monospace";
 
 export const fontSize = {
   12: '12px',
+  '12.5': '12.5px',
   13: '13px',
   '13.5': '13.5px',
   14: '14px',

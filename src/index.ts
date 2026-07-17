@@ -28,6 +28,12 @@ export type { NavItemProps } from './components/atoms/NavItem';
 export { EmptyState } from './components/atoms/EmptyState';
 export type { EmptyStateProps } from './components/atoms/EmptyState';
 
+export { Avatar } from './components/atoms/Avatar';
+export type { AvatarProps, AvatarSize, AvatarTone } from './components/atoms/Avatar';
+
+export { ThemeToggle } from './components/atoms/ThemeToggle';
+export type { ThemeToggleProps, Theme } from './components/atoms/ThemeToggle';
+
 // molecules
 export { FormField } from './components/molecules/FormField';
 export type { FormFieldProps } from './components/molecules/FormField';

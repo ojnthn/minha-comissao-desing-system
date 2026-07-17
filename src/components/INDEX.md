@@ -14,6 +14,8 @@
 | Toast | atoms | Mensagem de feedback transitória (sucesso/erro/aviso) | src/components/atoms/Toast |
 | NavItem | atoms | Item de navegação lateral com ícone, label e estado ativo | src/components/atoms/NavItem |
 | EmptyState | atoms | Mensagem de lista vazia | src/components/atoms/EmptyState |
+| Avatar | atoms | Iniciais em círculo/quadrado com gradiente (usuário ou marca) | src/components/atoms/Avatar |
+| ThemeToggle | atoms | Interruptor de tema claro/escuro (controlado, sem Context) | src/components/atoms/ThemeToggle |
 | FormField | molecules | Label + Input com texto de erro opcional | src/components/molecules/FormField |
 | FormFieldSelect | molecules | Label + Select com texto de erro opcional | src/components/molecules/FormFieldSelect |
 | StatCard | molecules | Cartão de métrica com valor e tendência opcional | src/components/molecules/StatCard |
