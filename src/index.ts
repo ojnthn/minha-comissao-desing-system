@@ -59,6 +59,9 @@ export type { PercentualListItemProps } from './components/molecules/PercentualL
 export { SearchField } from './components/molecules/SearchField';
 export type { SearchFieldProps } from './components/molecules/SearchField';
 
+export { ComboBox } from './components/molecules/ComboBox';
+export type { ComboBoxProps, ComboBoxOption } from './components/molecules/ComboBox';
+
 // organisms
 export { OnboardingCard } from './components/organisms/OnboardingCard';
 export type { OnboardingCardProps, OnboardingAction } from './components/organisms/OnboardingCard';
