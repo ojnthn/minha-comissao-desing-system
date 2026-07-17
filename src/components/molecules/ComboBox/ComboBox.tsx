@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Input } from '../../atoms/Input';
 import { colors, fontSize, fontWeight, radius, shadows, spacing } from '../../../tokens';
 
 const SEARCH_DEBOUNCE_MS = 300;
+const LOAD_MORE_COOLDOWN_MS = 400;
 
 export interface ComboBoxOption {
   value: string;
@@ -56,6 +57,7 @@ export function ComboBox({
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const lastLoadMoreAtRef = useRef(0);
 
   useEffect(() => {
     if (!onSearchChange) return;
@@ -115,11 +117,28 @@ export function ComboBox({
     }
   }
 
+  const requestLoadMore = useCallback(() => {
+    if (!hasMore || isLoading || !onLoadMore) return;
+    const now = Date.now();
+    if (now - lastLoadMoreAtRef.current < LOAD_MORE_COOLDOWN_MS) return;
+    lastLoadMoreAtRef.current = now;
+    onLoadMore();
+  }, [hasMore, isLoading, onLoadMore]);
+
   function handleListScroll() {
-    if (!hasMore || isLoading || !onLoadMore || !listRef.current) return;
+    if (!listRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-    if (scrollHeight - scrollTop - clientHeight < 48) onLoadMore();
+    if (scrollHeight - scrollTop - clientHeight < 48) requestLoadMore();
   }
+
+  // Se a página atual não preenche o espaço visível, a lista nunca fica
+  // rolável e o scroll de handleListScroll nunca dispara — sem isto, a
+  // paginação trava assim que o servidor devolve poucos itens de cada vez.
+  useEffect(() => {
+    if (!isOpen || !hasMore) return;
+    const list = listRef.current;
+    if (list && list.scrollHeight <= list.clientHeight) requestLoadMore();
+  }, [isOpen, options, hasMore, isLoading, requestLoadMore]);
 
   return (
     <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
