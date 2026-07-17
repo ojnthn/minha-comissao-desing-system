@@ -18,7 +18,7 @@
 | ThemeToggle | atoms | Interruptor de tema claro/escuro (controlado, sem Context) | src/components/atoms/ThemeToggle |
 | FormField | molecules | Label + Input com texto de erro opcional | src/components/molecules/FormField |
 | FormFieldSelect | molecules | Label + Select com texto de erro opcional | src/components/molecules/FormFieldSelect |
-| StatCard | molecules | Cartão de métrica com valor e tendência opcional | src/components/molecules/StatCard |
+| StatCard | molecules | Cartão de métrica com ícone colorido, valor e tendência opcional | src/components/molecules/StatCard |
 | OnboardingCard | organisms | Cartão tracejado de chamada para ação (onboarding/estado vazio) | src/components/organisms/OnboardingCard |
 | Sidebar | organisms | Navegação lateral colapsável com item ativo | src/components/organisms/Sidebar |
 | Topbar | organisms | Barra superior: busca, notificações, tema, usuário | src/components/organisms/Topbar |
@@ -34,4 +34,4 @@
 | PercentualForm | organisms | Formulário de criação/edição de percentual de comissão | src/components/organisms/PercentualForm |
 | ProdutoForm | organisms | Formulário de criação/edição de chapa de MDF | src/components/organisms/ProdutoForm |
 | PedidoForm | organisms | Formulário de criação/edição de pedido, com cálculo em tempo real | src/components/organisms/PedidoForm |
-| AppShellTemplate | templates | Esqueleto de página: sidebar + cabeçalho + toast + conteúdo | src/components/templates/AppShellTemplate |
+| AppShellTemplate | templates | Esqueleto de página: sidebar + topbar + cabeçalho + toast + conteúdo | src/components/templates/AppShellTemplate |
