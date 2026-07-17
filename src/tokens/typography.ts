@@ -3,6 +3,7 @@ export const fontFamilyDisplay = "'Fraunces', serif";
 export const fontFamilyMono = "'IBM Plex Mono', ui-monospace, monospace";
 
 export const fontSize = {
+  11: '11px',
   12: '12px',
   '12.5': '12.5px',
   '11.5': '11.5px',
