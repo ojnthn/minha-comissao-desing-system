@@ -8,8 +8,8 @@ export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 const sizeStyles: Record<LabelSize, { fontSize: string; marginBottom: string }> = {
-  sm: { fontSize: fontSize['14.5'], marginBottom: spacing[6] },
-  md: { fontSize: fontSize[15], marginBottom: spacing[7] },
+  sm: { fontSize: fontSize['13.5'], marginBottom: spacing[7] },
+  md: { fontSize: fontSize['14.5'], marginBottom: spacing[7] },
 };
 
 export function Label({ size = 'md', style, children, ...rest }: LabelProps) {
@@ -20,7 +20,7 @@ export function Label({ size = 'md', style, children, ...rest }: LabelProps) {
       style={{
         display: 'block',
         fontWeight: fontWeight.bold,
-        color: colors.text.primary,
+        color: colors.text.dim,
         fontSize: sizeStyle.fontSize,
         marginBottom: sizeStyle.marginBottom,
         ...style,
