@@ -8,13 +8,13 @@ export function EmptyState({ message }: EmptyStateProps) {
   return (
     <div
       style={{
-        background: colors.background.surface,
-        border: `1px solid ${colors.border.soft}`,
-        borderRadius: radius[14],
-        padding: spacing[26],
+        background: colors.background.elevated,
+        border: `1px dashed ${colors.border.default}`,
+        borderRadius: radius[16],
+        padding: `${spacing[34]} ${spacing[20]}`,
         textAlign: 'center',
         color: colors.text.faint,
-        fontSize: fontSize[15],
+        fontSize: fontSize['14.5'],
       }}
     >
       {message}
