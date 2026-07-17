@@ -1,6 +1,6 @@
 import { EmptyState } from '../../atoms/EmptyState';
 import { ProdutoListItem, type ProdutoListItemProps } from '../../molecules/ProdutoListItem';
-import { fontSize, fontWeight, spacing } from '../../../tokens';
+import { fontFamilyDisplay, fontSize, fontWeight, spacing } from '../../../tokens';
 
 export interface ProdutosListProps {
   produtos: (ProdutoListItemProps & { id: string })[];
@@ -9,7 +9,14 @@ export interface ProdutosListProps {
 export function ProdutosList({ produtos }: ProdutosListProps) {
   return (
     <div>
-      <div style={{ fontSize: fontSize[18], fontWeight: fontWeight.extrabold, marginBottom: spacing[12] }}>
+      <div
+        style={{
+          fontFamily: fontFamilyDisplay,
+          fontSize: fontSize[17],
+          fontWeight: fontWeight.bold,
+          marginBottom: spacing[14],
+        }}
+      >
         Chapas cadastradas
       </div>
       {produtos.length === 0 && <EmptyState message="Nenhuma chapa cadastrada ainda." />}

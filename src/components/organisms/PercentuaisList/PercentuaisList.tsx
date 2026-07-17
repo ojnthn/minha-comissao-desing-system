@@ -1,6 +1,6 @@
 import { EmptyState } from '../../atoms/EmptyState';
 import { PercentualListItem, type PercentualListItemProps } from '../../molecules/PercentualListItem';
-import { fontSize, fontWeight, spacing } from '../../../tokens';
+import { fontFamilyDisplay, fontSize, fontWeight, spacing } from '../../../tokens';
 
 export interface PercentuaisListProps {
   percentuais: (PercentualListItemProps & { id: string })[];
@@ -9,7 +9,14 @@ export interface PercentuaisListProps {
 export function PercentuaisList({ percentuais }: PercentuaisListProps) {
   return (
     <div>
-      <div style={{ fontSize: fontSize[18], fontWeight: fontWeight.extrabold, marginBottom: spacing[12] }}>
+      <div
+        style={{
+          fontFamily: fontFamilyDisplay,
+          fontSize: fontSize[17],
+          fontWeight: fontWeight.bold,
+          marginBottom: spacing[14],
+        }}
+      >
         Percentuais cadastrados
       </div>
       {percentuais.length === 0 && <EmptyState message="Nenhum percentual cadastrado ainda." />}
