@@ -21,6 +21,7 @@ export const fontSize = {
 } as const;
 
 export const fontWeight = {
+  regular: 400,
   semibold: 600,
   bold: 700,
   extrabold: 800,
