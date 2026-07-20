@@ -103,6 +103,9 @@ export type {
   PercentualOption as PedidoFormPercentualOption,
 } from './components/organisms/PedidoForm';
 
+export { DataTable } from './components/organisms/DataTable';
+export type { DataTableProps, DataTableColumn, DataTableRowActions } from './components/organisms/DataTable';
+
 // templates
 export { AppShellTemplate } from './components/templates/AppShellTemplate';
 export type { AppShellTemplateProps } from './components/templates/AppShellTemplate';

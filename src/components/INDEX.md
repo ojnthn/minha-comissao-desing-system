@@ -37,4 +37,5 @@
 | PercentualForm | organisms | Formulário de criação/edição de percentual de comissão | src/components/organisms/PercentualForm |
 | ProdutoForm | organisms | Formulário de criação/edição de chapa de MDF | src/components/organisms/ProdutoForm |
 | PedidoForm | organisms | Formulário de criação/edição de pedido, com cálculo em tempo real | src/components/organisms/PedidoForm |
+| DataTable | organisms | Tabela genérica com colunas configuráveis, linha clicável, menu de ações por linha e estados vazio/carregando | src/components/organisms/DataTable |
 | AppShellTemplate | templates | Esqueleto de página: sidebar + topbar + cabeçalho + toast + conteúdo | src/components/templates/AppShellTemplate |
