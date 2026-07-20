@@ -38,20 +38,27 @@ estado/API do `mdf-app`:
 | `descricao` | string | ex: "Padrão", "Promoção" |
 | `valor` | number | percentual (0–100) |
 
-### Pedido (venda)
+### Pedido (venda) — múltiplos itens
 | Campo | Tipo | Descrição |
 |---|---|---|
 | `id` | string | identificador |
-| `cliente` | string | nome do cliente |
+| `marceneiroId` | string | referência a Marceneiro (cliente do pedido) |
+| `data` | string | data do pedido (hoje é sempre a data de cadastro, gerada no backend — não editável) |
+| `itens` | array | um pedido tem N itens, montados um de cada vez antes de salvar (ver `PedidoItemForm`) |
+
+Cada item de `itens`:
+| Campo | Tipo | Descrição |
+|---|---|---|
 | `produtoId` | string | referência a Produto |
 | `m2` | number | quantidade vendida em m² |
-| `data` | string (ISO `YYYY-MM-DD`) | data do pedido |
-| `percentualId` | string | referência a Percentual usado **nesse** pedido (pode divergir do padrão do produto) |
+| `percentualId` | string | referência a Percentual usado **nesse** item (pode divergir do padrão do produto) |
 
 ### Regras de cálculo (responsabilidade do `mdf-app`, não do design system)
 ```
-valorPedido   = m2 * produto.valorPorM2
-comissaoPedido = valorPedido * (percentual.valor / 100)
+valorItem      = m2 * produto.valorPorM2
+comissaoItem   = valorItem * (percentual.valor / 100)
+valorPedido    = soma de valorItem de todos os itens
+comissaoPedido = soma de comissaoItem de todos os itens
 ```
 O design system **nunca** calcula isso — ele só recebe o resultado já formatado
 (campos `*Fmt`, ver seção 4). Cálculo, formatação de moeda/data e persistência são
@@ -65,7 +72,7 @@ O `Sidebar` (`src/components/organisms/Sidebar`) define as 5 telas do app via o 
 | screen key | Label no menu | Conteúdo esperado |
 |---|---|---|
 | `dashboard` | Resumo | `DashboardSummary`: métricas do mês + CTA "Registrar novo pedido" + últimos pedidos |
-| `novo` | Novo Pedido | `PedidoForm` |
+| `novo` | Novo Pedido | `PedidoInfoForm` (marceneiro/data/totais) + `PedidoItemForm` (adicionar produto) + `DataTable` (itens do pedido em construção) |
 | `pedidos` | Meus Pedidos | `PedidosList` (filtro por mês) |
 | `produtos` | Minhas Chapas | `ProdutosList` + `ProdutoForm` (criar/editar) |
 | `percentuais` | Comissões | `PercentuaisList` + `PercentualForm` (criar/editar) |
@@ -99,7 +106,7 @@ lógica/persistência, e deriva as versões `*Fmt` só na hora de passar para o 
    produtos/percentuais/pedidos (API, localStorage, etc.) e passa via props.
 2. **Cálculo de negócio**: valor do pedido e comissão são calculados pelo app antes de
    formatar e passar como `*Fmt` (seção 2 e 4).
-3. **Validação**: os forms (`PedidoForm`, `ProdutoForm`, `PercentualForm`) recebem
+3. **Validação**: os forms (`PedidoInfoForm`, `PedidoItemForm`, `ProdutoForm`, `PercentualForm`) recebem
    `isValid: boolean` já calculado pelo app — o botão de submit só desabilita, não valida
    sozinho.
 4. **Fonte Roboto**: o token `fontFamily` usa `'Roboto', ...` mas Roboto não é fonte de
@@ -109,7 +116,7 @@ lógica/persistência, e deriva as versões `*Fmt` só na hora de passar para o 
    declara suas próprias versões (React 19+), não vêm embutidas.
 6. **Roteamento**: `Sidebar` e navegação disparam callbacks (`onNavigate`, `onGoProdutos`,
    `onVerTodos`); quem decide para onde ir (router) é sempre o app.
-7. **Estado "sem produtos"/"sem percentuais"**: `PedidoForm` tem prop `semProdutos` e
+7. **Estado "sem produtos"/"sem percentuais"**: `PedidoItemForm` tem prop `semProdutos` e
    `ProdutoForm` tem `semPercentuaisAviso` — o app calcula essas condições (lista vazia)
    e passa como boolean; o componente só reage exibindo `OnboardingCard`/`Toast`.
 8. **Toast**: `AppShellTemplate` mostra um único toast por vez via `toastMessage` +
@@ -156,36 +163,66 @@ lógica/persistência, e deriva as versões `*Fmt` só na hora de passar para o 
 | `PedidosList` | `filtroMes`, `mesesDisponiveis: { key, label }[]`, `onFiltroMesChange`, `pedidos: (PedidoListItemProps & { id })[]` |
 | `ProdutosList` | `produtos: (ProdutoListItemProps & { id })[]` |
 | `PercentuaisList` | `percentuais: (PercentualListItemProps & { id })[]` |
-| `PedidoForm` | ver seção 6.1 abaixo — formulário de criação/edição de pedido, com preview de valor/comissão já calculados |
+| `PedidoInfoForm` | ver seção 6.1 abaixo — marceneiro + data + totais (valor/comissão) do pedido em construção |
+| `PedidoItemForm` | ver seção 6.1 abaixo — adiciona um item (produto/m²/percentual) por vez ao pedido em construção |
 | `ProdutoForm` | `title`, `nome`, `onNomeChange`, `valorPorM2`, `onValorChange`, `percentualComissaoId`, `onPercentualChange`, `percentuaisOptions`, `semPercentuaisAviso`, `isValid`, `submitLabel`, `onSubmit`, `isEditing`, `onCancel` |
 | `PercentualForm` | `title`, `descricao`, `onDescricaoChange`, `valor`, `onValorChange`, `isValid`, `submitLabel`, `onSubmit`, `isEditing`, `onCancel` |
 
-#### 6.1 `PedidoForm` (o mais complexo — vale um exemplo de integração)
+#### 6.1 `PedidoInfoForm` + `PedidoItemForm` (fluxo de N produtos por pedido)
+
+Um pedido tem múltiplos itens — o app monta uma lista local (produto/m²/percentual por
+item) antes de gravar tudo de uma vez. `PedidoInfoForm` cobre o cabeçalho do pedido
+(marceneiro/data/totais), `PedidoItemForm` cobre "adicionar um item por vez", e a
+tabela dos itens já adicionados usa `DataTable` (genérico, ver seção 6) composto pelo
+app — não é um organism dedicado.
+
 ```ts
-interface PedidoFormProps {
-  semProdutos: boolean;          // true => renderiza OnboardingCard pedindo cadastro de chapa
+interface PedidoInfoFormProps {
+  marceneiro: { id: string; nome: string } | null;
+  onMarceneiroChange: (option: { id: string; nome: string }) => void;
+  marceneirosOptions: { id: string; nome: string }[];
+  onMarceneirosSearchChange?: (term: string) => void;  // busca server-side (ComboBox)
+  marceneirosLoading?: boolean;
+  marceneirosHasMore?: boolean;
+  onLoadMoreMarceneiros?: () => void;
+  dataFmt: string;           // somente leitura — POST /pedidos não aceita data customizada
+  valorTotalFmt: string;     // soma de valorItem de todos os itens já adicionados
+  comissaoTotalFmt: string;  // soma de comissaoItem de todos os itens já adicionados
+}
+
+interface PedidoItemFormProps {
+  semProdutos: boolean;      // true => renderiza OnboardingCard pedindo cadastro de chapa
   onGoProdutos: () => void;
-  cliente: string; onClienteChange: (v: string) => void;
-  produtoId: string; onProdutoChange: (v: string) => void;
+  produto: { id: string; nome: string } | null;
+  onProdutoChange: (option: { id: string; nome: string }) => void;
   produtosOptions: { id: string; nome: string }[];
+  onProdutosSearchChange?: (term: string) => void;
+  produtosLoading?: boolean;
+  produtosHasMore?: boolean;
+  onLoadMoreProdutos?: () => void;
   m2: string; onM2Change: (v: string) => void;
-  data: string; onDataChange: (v: string) => void;
-  percentualId: string; onPercentualChange: (v: string) => void;
+  percentual: { id: string; optionLabel: string } | null;
+  onPercentualChange: (option: { id: string; optionLabel: string }) => void;
   percentuaisOptions: { id: string; optionLabel: string }[];
-  pedValorFmt: string;      // = m2 * produto.valorPorM2, já formatado — o app recalcula a cada onChange
-  pedComissaoFmt: string;   // = pedValor * percentual/100, já formatado
+  onPercentuaisSearchChange?: (term: string) => void;
+  percentuaisLoading?: boolean;
+  percentuaisHasMore?: boolean;
+  onLoadMorePercentuais?: () => void;
+  semPercentuaisAviso: boolean;
+  itemValorFmt: string;      // = m2 * produto.valorPorM2, já formatado — recalculado a cada onChange
+  itemComissaoFmt: string;   // = itemValor * percentual/100, já formatado
   isValid: boolean;
-  submitLabel: string;      // "Registrar pedido" / "Salvar alterações"
-  onSubmit: () => void;
-  isEditing: boolean;       // true => mostra botão "Cancelar" e mudou submitLabel
-  onCancel: () => void;
+  onAdd: () => void;         // adiciona o item à lista local — NÃO grava o pedido
 }
 ```
-Padrão de integração esperado no `mdf-app`: o app mantém `cliente/produtoId/m2/data/
-percentualId` como state local do form (via `useState`), recalcula `pedValorFmt`/
-`pedComissaoFmt` a cada mudança (`useMemo`), calcula `isValid` (todos os campos
-obrigatórios preenchidos + produto/percentual existentes) e só faz a gravação real
-(API/localStorage) dentro de `onSubmit`.
+
+Padrão de integração esperado no `mdf-app`: `onAdd` só empurra `{ produto, m2, percentual }`
+pra um array de estado local (a tabela de itens, renderizada com `DataTable` + ação de
+excluir por linha); `PedidoInfoForm.valorTotalFmt`/`comissaoTotalFmt` são derivados desse
+array a cada render (`useMemo`, somando `m2 * produto.valorPorM2` e a comissão de cada
+item). A gravação real (`POST /pedidos`, com todos os itens de uma vez) só acontece no
+botão "Salvar pedido" do próprio app — nenhum dos dois organisms tem esse botão, porque a
+ação "salvar o pedido inteiro" não pertence a nenhum dos dois assuntos de UI isoladamente.
 
 ### Templates
 | Componente | Props principais |

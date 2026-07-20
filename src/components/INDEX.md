@@ -37,6 +37,7 @@
 | PercentualForm | organisms | Formulário de criação/edição de percentual de comissão | src/components/organisms/PercentualForm |
 | ProdutoForm | organisms | Formulário de criação/edição de chapa de MDF, incluindo valor do m² | src/components/organisms/ProdutoForm |
 | MarceneiroForm | organisms | Formulário de criação/edição de marceneiro, incluindo telefone/WhatsApp opcional | src/components/organisms/MarceneiroForm |
-| PedidoForm | organisms | Formulário de criação/edição de pedido, com cálculo em tempo real | src/components/organisms/PedidoForm |
+| PedidoInfoForm | organisms | Marceneiro, data e totais (valor/comissão) do pedido em construção | src/components/organisms/PedidoInfoForm |
+| PedidoItemForm | organisms | Adiciona um item (produto/m²/percentual) por vez ao pedido em construção, com preview do item | src/components/organisms/PedidoItemForm |
 | DataTable | organisms | Tabela genérica com colunas configuráveis, linha clicável, zebrado, busca opcional (controlada via props), menu de ações por linha e estados vazio/carregando | src/components/organisms/DataTable |
 | AppShellTemplate | templates | Esqueleto de página: sidebar + topbar + cabeçalho + toast + conteúdo | src/components/templates/AppShellTemplate |

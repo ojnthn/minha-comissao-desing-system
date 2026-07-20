@@ -67,6 +67,26 @@ Motivo: style inline tem especificidade maior que qualquer seletor de classe (me
 pseudo-classe), então zebrado via `style={{background}}` bloquearia o hover/focus existentes
 nas linhas ímpares. Resolver com classes mantém a precedência controlável via CSS.
 
+## 2026-07-20 — `PedidoForm` (item único) removido; substituído por `PedidoInfoForm` + `PedidoItemForm`
+Decisão: `PedidoForm` (marceneiro/cliente + 1 produto + submit direto) foi removido — não tinha
+nenhum consumidor real ainda (`new-order.page.tsx` no `mdf-app` era um placeholder, nunca chegou
+a importar o componente). No lugar, dois organisms menores, cada um com um único assunto de UI
+(regra de `organisms/CLAUDE.md`): `PedidoInfoForm` (marceneiro via `ComboBox` com busca + data
+somente leitura + totais do pedido) e `PedidoItemForm` (produto via `ComboBox` + m² + percentual
+via `ComboBox`, com preview do item e botão "Adicionar produto" — não submete o pedido, só
+adiciona à lista local). A tabela de itens do pedido em construção usa o organism genérico
+`DataTable` já existente (colunas configuráveis + ação de excluir por linha), composta pelo app
+consumidor — não foi criado um organism de tabela dedicado pra não duplicar o que `DataTable` já
+resolve.
+Motivo: o backend (`minha-venda-foundation`) sempre modelou `Pedido` com N itens
+(`PedidoProduto[]`, `POST /pedidos` exige array com `ArrayMinSize(1)`) — o `PedidoForm` de item
+único nunca refletiu o contrato real, só um desenho anterior do produto. Pedido explícito do
+usuário (`minha-comissao-app`, feature de cadastro de pedido) pra alinhar a UI ao modelo real de
+N produtos por pedido.
+Nota sobre "Data": o campo é somente leitura porque `POST /pedidos` não aceita data customizada —
+`logDataCadastro` é sempre gerado pelo backend na criação. Exibido pro usuário confirmar, sem
+`onChange`/input real.
+
 ## 2026-07-20 — `ProdutoForm` ganha `valorPorM2`; `MarceneiroForm` ganha `telefone`
 Decisão: `ProdutoForm` passa a exigir `valorPorM2: string` / `onValorPorM2Change` (campo "Valor do
 m²", numérico, mesmo padrão do campo `m2` do `PedidoForm`). `MarceneiroForm` ganha `telefone:

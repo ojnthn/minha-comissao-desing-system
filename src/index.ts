@@ -99,12 +99,18 @@ export type { ProdutoFormProps, PercentualOption } from './components/organisms/
 export { MarceneiroForm } from './components/organisms/MarceneiroForm';
 export type { MarceneiroFormProps } from './components/organisms/MarceneiroForm';
 
-export { PedidoForm } from './components/organisms/PedidoForm';
+export { PedidoInfoForm } from './components/organisms/PedidoInfoForm';
 export type {
-  PedidoFormProps,
+  PedidoInfoFormProps,
+  MarceneiroOption,
+} from './components/organisms/PedidoInfoForm';
+
+export { PedidoItemForm } from './components/organisms/PedidoItemForm';
+export type {
+  PedidoItemFormProps,
   ProdutoOption,
-  PercentualOption as PedidoFormPercentualOption,
-} from './components/organisms/PedidoForm';
+  PercentualOption as PedidoItemFormPercentualOption,
+} from './components/organisms/PedidoItemForm';
 
 export { DataTable } from './components/organisms/DataTable';
 export type { DataTableProps, DataTableColumn, DataTableRowActions } from './components/organisms/DataTable';
