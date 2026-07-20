@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ProdutoForm } from './ProdutoForm';
+import { ProdutoForm, type PercentualOption } from './ProdutoForm';
 
 const meta: Meta<typeof ProdutoForm> = {
   title: 'Organisms/ProdutoForm',
@@ -10,7 +10,7 @@ const meta: Meta<typeof ProdutoForm> = {
 export default meta;
 type Story = StoryObj<typeof ProdutoForm>;
 
-const percentuaisOptions = [
+const percentuaisOptions: PercentualOption[] = [
   { id: '1', optionLabel: 'Padrão (10%)' },
   { id: '2', optionLabel: 'Promoção (8%)' },
 ];
@@ -18,15 +18,15 @@ const percentuaisOptions = [
 export const AddNew: Story = {
   render: function AddNewStory() {
     const [nome, setNome] = useState('');
-    const [percentualComissaoId, setPercentualComissaoId] = useState('');
-    const isValid = nome.trim() !== '' && percentualComissaoId !== '';
+    const [percentualComissao, setPercentualComissao] = useState<PercentualOption | null>(null);
+    const isValid = nome.trim() !== '' && percentualComissao !== null;
     return (
       <ProdutoForm
         title="Adicionar chapa"
         nome={nome}
         onNomeChange={setNome}
-        percentualComissaoId={percentualComissaoId}
-        onPercentualChange={setPercentualComissaoId}
+        percentualComissao={percentualComissao}
+        onPercentualChange={setPercentualComissao}
         percentuaisOptions={percentuaisOptions}
         semPercentuaisAviso={false}
         isValid={isValid}
@@ -44,7 +44,7 @@ export const SemPercentuaisCadastrados: Story = {
     title: 'Adicionar chapa',
     nome: '',
     onNomeChange: () => {},
-    percentualComissaoId: '',
+    percentualComissao: null,
     onPercentualChange: () => {},
     percentuaisOptions: [],
     semPercentuaisAviso: true,

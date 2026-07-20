@@ -1,5 +1,6 @@
 import { FormField } from '../../molecules/FormField';
-import { FormFieldSelect } from '../../molecules/FormFieldSelect';
+import { Label } from '../../atoms/Label';
+import { ComboBox } from '../../molecules/ComboBox';
 import { Button } from '../../atoms/Button';
 import { Toast } from '../../atoms/Toast';
 import { colors, fontFamilyDisplay, fontSize, fontWeight, radius, shadows, spacing } from '../../../tokens';
@@ -13,9 +14,13 @@ export interface ProdutoFormProps {
   title: string;
   nome: string;
   onNomeChange: (value: string) => void;
-  percentualComissaoId: string;
-  onPercentualChange: (value: string) => void;
+  percentualComissao: PercentualOption | null;
+  onPercentualChange: (option: PercentualOption) => void;
   percentuaisOptions: PercentualOption[];
+  onPercentuaisSearchChange?: (term: string) => void;
+  percentuaisLoading?: boolean;
+  percentuaisHasMore?: boolean;
+  onLoadMorePercentuais?: () => void;
   semPercentuaisAviso: boolean;
   isValid: boolean;
   submitLabel: string;
@@ -28,9 +33,13 @@ export function ProdutoForm({
   title,
   nome,
   onNomeChange,
-  percentualComissaoId,
+  percentualComissao,
   onPercentualChange,
   percentuaisOptions,
+  onPercentuaisSearchChange,
+  percentuaisLoading = false,
+  percentuaisHasMore = false,
+  onLoadMorePercentuais,
   semPercentuaisAviso,
   isValid,
   submitLabel,
@@ -63,21 +72,22 @@ export function ProdutoForm({
               placeholder: 'Ex: MDF Branco 15mm',
             }}
           />
-          <FormFieldSelect
-            label="Comissão padrão"
-            labelSize="sm"
-            selectProps={{
-              value: percentualComissaoId,
-              onChange: (event) => onPercentualChange(event.target.value),
-            }}
-          >
-            <option value="">Selecione</option>
-            {percentuaisOptions.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.optionLabel}
-              </option>
-            ))}
-          </FormFieldSelect>
+          <div>
+            <Label size="sm">Comissão padrão</Label>
+            <ComboBox
+              aria-label="Comissão padrão"
+              options={percentuaisOptions.map((option) => ({ value: option.id, label: option.optionLabel }))}
+              value={percentualComissao ? { value: percentualComissao.id, label: percentualComissao.optionLabel } : null}
+              onChange={(option) => onPercentualChange({ id: option.value, optionLabel: option.label })}
+              onSearchChange={onPercentuaisSearchChange}
+              isLoading={percentuaisLoading}
+              hasMore={percentuaisHasMore}
+              onLoadMore={onLoadMorePercentuais}
+              placeholder="Selecione"
+              searchPlaceholder="Buscar comissão..."
+              emptyMessage="Nenhuma comissão encontrada."
+            />
+          </div>
           <div style={{ display: 'flex', gap: spacing[12] }}>
             <Button disabled={!isValid} onClick={onSubmit} style={{ flex: 1 }}>
               {submitLabel}
@@ -93,7 +103,7 @@ export function ProdutoForm({
 
       {semPercentuaisAviso && (
         <div style={{ marginBottom: spacing[16] }}>
-          <Toast variant="warning">Cadastre um percentual de comissão primeiro, na seção "Comissões".</Toast>
+          <Toast variant="warning">Nenhuma comissão cadastrada. Configure os percentuais direto no banco.</Toast>
         </div>
       )}
     </div>
