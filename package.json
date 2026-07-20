@@ -1,11 +1,13 @@
 {
-  "name": "minhas-venda-design-system",
-  "private": true,
+  "name": "@ojnthn/minhas-venda-design-system",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,6 +15,9 @@
       "require": "./dist/index.cjs"
     },
     "./index.css": "./dist/index.css"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "dev": "vite",
@@ -22,7 +27,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
@@ -33,6 +38,8 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "setup": "^0.0.3",
     "storybook": "10.5.0",
     "tsup": "^8.5.1",

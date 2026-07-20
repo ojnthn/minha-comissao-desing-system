@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      react:
-        specifier: ^19.2.7
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
     devDependencies:
       '@storybook/react-vite':
         specifier: 10.5.0
@@ -33,6 +26,12 @@ importers:
       oxlint:
         specifier: ^1.71.0
         version: 1.74.0
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.7
+        version: 19.2.7(react@19.2.7)
       setup:
         specifier: ^0.0.3
         version: 0.0.3
