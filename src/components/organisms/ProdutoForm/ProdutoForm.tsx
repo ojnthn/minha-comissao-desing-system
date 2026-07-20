@@ -13,8 +13,6 @@ export interface ProdutoFormProps {
   title: string;
   nome: string;
   onNomeChange: (value: string) => void;
-  valorPorM2: string;
-  onValorChange: (value: string) => void;
   percentualComissaoId: string;
   onPercentualChange: (value: string) => void;
   percentuaisOptions: PercentualOption[];
@@ -30,8 +28,6 @@ export function ProdutoForm({
   title,
   nome,
   onNomeChange,
-  valorPorM2,
-  onValorChange,
   percentualComissaoId,
   onPercentualChange,
   percentuaisOptions,
@@ -67,35 +63,21 @@ export function ProdutoForm({
               placeholder: 'Ex: MDF Branco 15mm',
             }}
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: spacing[14] }}>
-            <FormField
-              label="Valor por m² (R$)"
-              labelSize="sm"
-              inputProps={{
-                type: 'number',
-                min: 0,
-                step: 0.01,
-                value: valorPorM2,
-                onChange: (event) => onValorChange(event.target.value),
-                placeholder: '0,00',
-              }}
-            />
-            <FormFieldSelect
-              label="Comissão padrão"
-              labelSize="sm"
-              selectProps={{
-                value: percentualComissaoId,
-                onChange: (event) => onPercentualChange(event.target.value),
-              }}
-            >
-              <option value="">Selecione</option>
-              {percentuaisOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.optionLabel}
-                </option>
-              ))}
-            </FormFieldSelect>
-          </div>
+          <FormFieldSelect
+            label="Comissão padrão"
+            labelSize="sm"
+            selectProps={{
+              value: percentualComissaoId,
+              onChange: (event) => onPercentualChange(event.target.value),
+            }}
+          >
+            <option value="">Selecione</option>
+            {percentuaisOptions.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.optionLabel}
+              </option>
+            ))}
+          </FormFieldSelect>
           <div style={{ display: 'flex', gap: spacing[12] }}>
             <Button disabled={!isValid} onClick={onSubmit} style={{ flex: 1 }}>
               {submitLabel}
