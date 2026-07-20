@@ -19,6 +19,7 @@ export const Default: Story = {
     userName: 'Você',
     userRole: 'Vendedor(a)',
     userInitials: 'MC',
+    onLogout: () => {},
   },
 };
 
@@ -32,6 +33,7 @@ function InteractiveTopbar() {
       userName="Você"
       userRole="Vendedor(a)"
       userInitials="MC"
+      onLogout={() => {}}
     />
   );
 }

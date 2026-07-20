@@ -43,6 +43,7 @@ export const Desktop: Story = {
           userName: 'Você',
           userRole: 'Vendedor(a)',
           userInitials: 'MC',
+          onLogout: () => {},
         }}
         title="Olá! Aqui está seu resumo"
         subtitle="Julho 2026"
@@ -81,6 +82,7 @@ export const MobileCollapsedSidebar: Story = {
             userName: 'Você',
             userRole: 'Vendedor(a)',
             userInitials: 'MC',
+            onLogout: () => {},
           }}
           title="Olá! Aqui está seu resumo"
           subtitle="Julho 2026"
