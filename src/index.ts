@@ -96,6 +96,9 @@ export type { PercentualFormProps } from './components/organisms/PercentualForm'
 export { ProdutoForm } from './components/organisms/ProdutoForm';
 export type { ProdutoFormProps, PercentualOption } from './components/organisms/ProdutoForm';
 
+export { MarceneiroForm } from './components/organisms/MarceneiroForm';
+export type { MarceneiroFormProps } from './components/organisms/MarceneiroForm';
+
 export { PedidoForm } from './components/organisms/PedidoForm';
 export type {
   PedidoFormProps,
