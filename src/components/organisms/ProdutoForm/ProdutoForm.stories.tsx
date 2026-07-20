@@ -18,13 +18,16 @@ const percentuaisOptions: PercentualOption[] = [
 export const AddNew: Story = {
   render: function AddNewStory() {
     const [nome, setNome] = useState('');
+    const [valorPorM2, setValorPorM2] = useState('');
     const [percentualComissao, setPercentualComissao] = useState<PercentualOption | null>(null);
-    const isValid = nome.trim() !== '' && percentualComissao !== null;
+    const isValid = nome.trim() !== '' && valorPorM2.trim() !== '' && percentualComissao !== null;
     return (
       <ProdutoForm
         title="Adicionar chapa"
         nome={nome}
         onNomeChange={setNome}
+        valorPorM2={valorPorM2}
+        onValorPorM2Change={setValorPorM2}
         percentualComissao={percentualComissao}
         onPercentualChange={setPercentualComissao}
         percentuaisOptions={percentuaisOptions}
@@ -44,6 +47,8 @@ export const SemPercentuaisCadastrados: Story = {
     title: 'Adicionar chapa',
     nome: '',
     onNomeChange: () => {},
+    valorPorM2: '',
+    onValorPorM2Change: () => {},
     percentualComissao: null,
     onPercentualChange: () => {},
     percentuaisOptions: [],

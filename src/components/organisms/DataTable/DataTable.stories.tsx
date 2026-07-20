@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar } from '../../atoms/Avatar';
 import { Badge, type BadgeVariant } from '../../atoms/Badge';
@@ -104,5 +105,29 @@ export const Vazio: Story = {
     data: [],
     rowKey: (row) => row.id,
     emptyMessage: 'Nenhuma conta cadastrada ainda.',
+  },
+};
+
+export const ComPesquisa: Story = {
+  render: () => {
+    function ComPesquisaExample() {
+      const [search, setSearch] = useState('');
+      const filtered = mockAccounts.filter((account) =>
+        account.nome.toLowerCase().includes(search.toLowerCase()),
+      );
+      return (
+        <DataTable
+          aria-label="Novas contas"
+          columns={columns}
+          data={filtered}
+          rowKey={(row) => row.id}
+          searchable
+          searchValue={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Buscar por nome..."
+        />
+      );
+    }
+    return <ComPesquisaExample />;
   },
 };

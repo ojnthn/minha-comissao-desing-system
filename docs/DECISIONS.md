@@ -47,3 +47,33 @@ prop `variant` mapeada por `Record<Variant, {background, color}>` a partir de to
 Motivo: `Badge` precisava de uma variante neutra e nenhum token de cor cinza/neutro existia
 ainda — em vez de hardcode pontual, o valor foi promovido a token, reutilizável por
 componentes futuros que precisem do mesmo tom neutro.
+
+## 2026-07-20 — `RowActionsMenu` passa a renderizar o dropdown via `createPortal(document.body)`
+Decisão: o menu (`role="menu"`) não fica mais aninhado no DOM do container relativo — é
+portado para `document.body` com `position: fixed`, posição calculada via
+`getBoundingClientRect()` do trigger e recalculada em `scroll` (capture, para pegar scroll de
+qualquer ancestral) e `resize`. É o primeiro componente do design system a usar portal.
+Motivo: dentro do `DataTable`, o wrapper com `overflowX: 'auto'` força o eixo Y a `auto`
+também (regra do CSS: overflow-x/y não podem ficar um `visible` e outro não), então o menu
+posicionado como `absolute` dentro desse wrapper era cortado pelo scroll da tabela. Portal +
+`fixed` desacopla o menu do overflow de qualquer ancestral. Outside-click agora verifica tanto
+o container do trigger quanto o node portado.
+
+## 2026-07-20 — Zebrado do `DataTable` via `:nth-child(even)` em vez de style inline
+Decisão: linhas de dado usam classe `mv-data-table-row` sempre (não só quando clicável) e o
+zebrado é `.mv-data-table-row:nth-child(even) { background }` na tag `<style>` do próprio
+componente. Hover/focus só se aplicam com a classe adicional `mv-data-table-row--clickable`.
+Motivo: style inline tem especificidade maior que qualquer seletor de classe (mesmo com
+pseudo-classe), então zebrado via `style={{background}}` bloquearia o hover/focus existentes
+nas linhas ímpares. Resolver com classes mantém a precedência controlável via CSS.
+
+## 2026-07-20 — `ProdutoForm` ganha `valorPorM2`; `MarceneiroForm` ganha `telefone`
+Decisão: `ProdutoForm` passa a exigir `valorPorM2: string` / `onValorPorM2Change` (campo "Valor do
+m²", numérico, mesmo padrão do campo `m2` do `PedidoForm`). `MarceneiroForm` ganha `telefone:
+string` / `onTelefoneChange` (campo "Telefone/WhatsApp", opcional — validação de
+obrigatoriedade fica a cargo do app consumidor, o design system só expõe o campo).
+Motivo: `Produto` no backend (`minha-venda-foundation`) passou a ter `valorPorM2` (double,
+obrigatório) e `Marceneiro` passou a ter `telefone` (opcional), fechando a divergência de
+modelo registrada em `TODO.md`/`ARCHITECTURE.md` do `minha-comissao-app` (`Produto.valorPorM2`
+documentado mas nunca implementado). Ambos os campos foram removidos previamente do
+`ProdutoForm` por falta de suporte no backend — agora reintroduzidos.

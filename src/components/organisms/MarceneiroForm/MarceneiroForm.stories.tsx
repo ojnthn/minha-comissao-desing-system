@@ -13,11 +13,14 @@ type Story = StoryObj<typeof MarceneiroForm>;
 export const AddNew: Story = {
   render: function AddNewStory() {
     const [nome, setNome] = useState('');
+    const [telefone, setTelefone] = useState('');
     return (
       <MarceneiroForm
         title="Adicionar marceneiro"
         nome={nome}
         onNomeChange={setNome}
+        telefone={telefone}
+        onTelefoneChange={setTelefone}
         isValid={nome.trim() !== ''}
         submitLabel="Adicionar marceneiro"
         onSubmit={() => {}}
@@ -33,6 +36,8 @@ export const Editing: Story = {
     title: 'Editar marceneiro',
     nome: 'Marcenaria Bom Sucesso',
     onNomeChange: () => {},
+    telefone: '(11) 98765-4321',
+    onTelefoneChange: () => {},
     isValid: true,
     submitLabel: 'Salvar alterações',
     onSubmit: () => {},

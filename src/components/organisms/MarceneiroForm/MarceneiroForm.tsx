@@ -6,6 +6,8 @@ export interface MarceneiroFormProps {
   title: string;
   nome: string;
   onNomeChange: (value: string) => void;
+  telefone: string;
+  onTelefoneChange: (value: string) => void;
   isValid: boolean;
   submitLabel: string;
   onSubmit: () => void;
@@ -17,6 +19,8 @@ export function MarceneiroForm({
   title,
   nome,
   onNomeChange,
+  telefone,
+  onTelefoneChange,
   isValid,
   submitLabel,
   onSubmit,
@@ -44,6 +48,15 @@ export function MarceneiroForm({
             value: nome,
             onChange: (event) => onNomeChange(event.target.value),
             placeholder: 'Ex: Marcenaria Bom Sucesso',
+          }}
+        />
+        <FormField
+          label="Telefone/WhatsApp"
+          labelSize="sm"
+          inputProps={{
+            value: telefone,
+            onChange: (event) => onTelefoneChange(event.target.value),
+            placeholder: 'Ex: (11) 98765-4321',
           }}
         />
         <div style={{ display: 'flex', gap: spacing[12] }}>

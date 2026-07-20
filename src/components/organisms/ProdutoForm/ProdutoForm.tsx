@@ -14,6 +14,8 @@ export interface ProdutoFormProps {
   title: string;
   nome: string;
   onNomeChange: (value: string) => void;
+  valorPorM2: string;
+  onValorPorM2Change: (value: string) => void;
   percentualComissao: PercentualOption | null;
   onPercentualChange: (option: PercentualOption) => void;
   percentuaisOptions: PercentualOption[];
@@ -33,6 +35,8 @@ export function ProdutoForm({
   title,
   nome,
   onNomeChange,
+  valorPorM2,
+  onValorPorM2Change,
   percentualComissao,
   onPercentualChange,
   percentuaisOptions,
@@ -70,6 +74,18 @@ export function ProdutoForm({
               value: nome,
               onChange: (event) => onNomeChange(event.target.value),
               placeholder: 'Ex: MDF Branco 15mm',
+            }}
+          />
+          <FormField
+            label="Valor do m²"
+            labelSize="sm"
+            inputProps={{
+              type: 'number',
+              min: 0,
+              step: 0.01,
+              value: valorPorM2,
+              onChange: (event) => onValorPorM2Change(event.target.value),
+              placeholder: '0,00',
             }}
           />
           <div>

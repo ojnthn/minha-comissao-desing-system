@@ -182,7 +182,7 @@ export function Topbar({
         >
           <Avatar initials={userInitials} size="sm" tone="user" />
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: fontSize['13.5'], fontWeight: fontWeight.semibold, lineHeight: 1.2 }}>{userName}</div>
+            <div style={{ fontSize: fontSize['13.5'], fontWeight: fontWeight.semibold, lineHeight: 1.2, color: colors.text.primary }}>{userName}</div>
             <div style={{ fontSize: fontSize['11.5'], color: colors.text.faint }}>{userRole}</div>
           </div>
           <span

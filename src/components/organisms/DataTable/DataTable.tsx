@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { EmptyState } from '../../atoms/EmptyState';
 import { RowActionsMenu, type RowAction } from '../../molecules/RowActionsMenu';
+import { SearchField } from '../../molecules/SearchField';
 import { colors, fontSize, fontWeight, radius, spacing } from '../../../tokens';
 
 export interface DataTableColumn<T> {
@@ -24,6 +25,10 @@ export interface DataTableProps<T> {
   isLoading?: boolean;
   emptyMessage?: string;
   'aria-label'?: string;
+  searchable?: boolean;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  searchPlaceholder?: string;
 }
 
 const SKELETON_ROW_COUNT = 4;
@@ -37,20 +42,41 @@ export function DataTable<T>({
   isLoading = false,
   emptyMessage = 'Nenhum registro encontrado.',
   'aria-label': ariaLabel,
+  searchable = false,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder = 'Buscar...',
 }: DataTableProps<T>) {
   const hasActionsColumn = !!rowActions;
 
+  const searchBar = searchable && (
+    <div style={{ maxWidth: '320px' }}>
+      <SearchField
+        placeholder={searchPlaceholder}
+        value={searchValue}
+        onChange={(event) => onSearchChange?.(event.target.value)}
+      />
+    </div>
+  );
+
   if (!isLoading && data.length === 0) {
-    return <EmptyState message={emptyMessage} />;
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[16] }}>
+        {searchBar}
+        <EmptyState message={emptyMessage} />
+      </div>
+    );
   }
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[16] }}>
       <style>{`
         @keyframes mvDataTableSkeletonPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-        .mv-data-table-row:hover { background: ${colors.background.surfaceAlt}; }
-        .mv-data-table-row:focus-visible { outline: 2px solid ${colors.accent.default}; outline-offset: -2px; }
+        .mv-data-table-row:nth-child(even) { background: ${colors.background.surface}; }
+        .mv-data-table-row.mv-data-table-row--clickable:hover { background: ${colors.background.surfaceAlt}; }
+        .mv-data-table-row.mv-data-table-row--clickable:focus-visible { outline: 2px solid ${colors.accent.default}; outline-offset: -2px; }
       `}</style>
+      {searchBar}
       <div
         style={{
           overflowX: 'auto',
@@ -111,7 +137,7 @@ export function DataTable<T>({
                   return (
                     <tr
                       key={key}
-                      className={onRowClick ? 'mv-data-table-row' : undefined}
+                      className={`mv-data-table-row${onRowClick ? ' mv-data-table-row--clickable' : ''}`}
                       tabIndex={onRowClick ? 0 : undefined}
                       onClick={onRowClick ? () => onRowClick(row) : undefined}
                       onKeyDown={
@@ -156,6 +182,6 @@ export function DataTable<T>({
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

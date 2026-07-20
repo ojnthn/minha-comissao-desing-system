@@ -29,14 +29,14 @@
 | PercentualListItem | molecules | Linha de percentual cadastrado, com editar/excluir | src/components/molecules/PercentualListItem |
 | SearchField | molecules | Campo de busca com ícone, estilo topbar | src/components/molecules/SearchField |
 | ComboBox | molecules | Select customizado com busca e paginação server-driven (dados via props) | src/components/molecules/ComboBox |
-| RowActionsMenu | molecules | Menu dropdown de ações de linha (uma ação principal + ações secundárias) | src/components/molecules/RowActionsMenu |
+| RowActionsMenu | molecules | Menu dropdown de ações de linha (uma ação principal + ações secundárias), renderizado via portal para não ser cortado por scroll de ancestral | src/components/molecules/RowActionsMenu |
 | DashboardSummary | organisms | Cartões de métrica + CTA + pedidos recentes | src/components/organisms/DashboardSummary |
 | PedidosList | organisms | Filtro por mês + lista de pedidos com estado vazio | src/components/organisms/PedidosList |
 | ProdutosList | organisms | Lista de chapas cadastradas com estado vazio | src/components/organisms/ProdutosList |
 | PercentuaisList | organisms | Lista de percentuais cadastrados com estado vazio | src/components/organisms/PercentuaisList |
 | PercentualForm | organisms | Formulário de criação/edição de percentual de comissão | src/components/organisms/PercentualForm |
-| ProdutoForm | organisms | Formulário de criação/edição de chapa de MDF | src/components/organisms/ProdutoForm |
-| MarceneiroForm | organisms | Formulário de criação/edição de marceneiro | src/components/organisms/MarceneiroForm |
+| ProdutoForm | organisms | Formulário de criação/edição de chapa de MDF, incluindo valor do m² | src/components/organisms/ProdutoForm |
+| MarceneiroForm | organisms | Formulário de criação/edição de marceneiro, incluindo telefone/WhatsApp opcional | src/components/organisms/MarceneiroForm |
 | PedidoForm | organisms | Formulário de criação/edição de pedido, com cálculo em tempo real | src/components/organisms/PedidoForm |
-| DataTable | organisms | Tabela genérica com colunas configuráveis, linha clicável, menu de ações por linha e estados vazio/carregando | src/components/organisms/DataTable |
+| DataTable | organisms | Tabela genérica com colunas configuráveis, linha clicável, zebrado, busca opcional (controlada via props), menu de ações por linha e estados vazio/carregando | src/components/organisms/DataTable |
 | AppShellTemplate | templates | Esqueleto de página: sidebar + topbar + cabeçalho + toast + conteúdo | src/components/templates/AppShellTemplate |
