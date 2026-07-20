@@ -31,6 +31,9 @@ export type { EmptyStateProps } from './components/atoms/EmptyState';
 export { Avatar } from './components/atoms/Avatar';
 export type { AvatarProps, AvatarSize, AvatarTone } from './components/atoms/Avatar';
 
+export { Badge } from './components/atoms/Badge';
+export type { BadgeProps, BadgeVariant } from './components/atoms/Badge';
+
 export { ThemeToggle } from './components/atoms/ThemeToggle';
 export type { ThemeToggleProps, Theme } from './components/atoms/ThemeToggle';
 

@@ -37,4 +37,8 @@ export const colors = {
     text: 'var(--danger, #c9695f)',
     soft: 'var(--danger-soft, rgba(201,105,95,0.14))',
   },
+  neutral: {
+    text: 'var(--neutral, #b3a68f)',
+    soft: 'var(--neutral-soft, rgba(179,166,143,0.14))',
+  },
 } as const;

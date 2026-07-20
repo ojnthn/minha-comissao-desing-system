@@ -15,6 +15,7 @@
 | NavItem | atoms | Item de navegação lateral com ícone, label e estado ativo | src/components/atoms/NavItem |
 | EmptyState | atoms | Mensagem de lista vazia | src/components/atoms/EmptyState |
 | Avatar | atoms | Iniciais em círculo/quadrado com gradiente (usuário ou marca) | src/components/atoms/Avatar |
+| Badge | atoms | Rótulo curto em pílula, com variante de cor semântica (sucesso/erro/alerta/info/neutro) | src/components/atoms/Badge |
 | ThemeToggle | atoms | Interruptor de tema claro/escuro (controlado, sem Context) | src/components/atoms/ThemeToggle |
 | FormField | molecules | Label + Input com texto de erro opcional | src/components/molecules/FormField |
 | FormFieldSelect | molecules | Label + Select com texto de erro opcional | src/components/molecules/FormFieldSelect |

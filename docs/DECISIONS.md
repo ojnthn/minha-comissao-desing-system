@@ -36,3 +36,14 @@ Fontes novas: `Fraunces` (títulos/display), `Inter` (corpo, substitui Roboto), 
 `.storybook/preview-head.html`.
 Motivo: adoção do novo template Figma do produto, que define tema claro/escuro alternável
 pelo usuário.
+
+## 2026-07-20 — Novo token de cor `neutral` para variantes de status sem semântica forte
+Decisão: adicionado `colors.neutral` (`--neutral`/`--neutral-soft`) em `src/tokens/colors.ts`
+e `src/index.css` (dark + light), no mesmo formato `var(--nome, fallback)` dos demais tokens
+de cor semântica. Usado como variante padrão do atom `Badge` quando nenhum status
+(sucesso/erro/alerta/info) se aplica. Segue o padrão já estabelecido de variante de cor via
+prop `variant` mapeada por `Record<Variant, {background, color}>` a partir de tokens
+(mesmo formato de `ToastVariant`).
+Motivo: `Badge` precisava de uma variante neutra e nenhum token de cor cinza/neutro existia
+ainda — em vez de hardcode pontual, o valor foi promovido a token, reutilizável por
+componentes futuros que precisem do mesmo tom neutro.

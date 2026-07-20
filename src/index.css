@@ -23,6 +23,8 @@
   --warn-soft: rgba(207, 143, 99, 0.14);
   --danger: #c9695f;
   --danger-soft: rgba(201, 105, 95, 0.14);
+  --neutral: #b3a68f;
+  --neutral-soft: rgba(179, 166, 143, 0.14);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -16px rgba(0, 0, 0, 0.55);
 }
 
@@ -48,6 +50,8 @@ html[data-theme='light'] {
   --warn-soft: rgba(168, 95, 55, 0.12);
   --danger: #a13f36;
   --danger-soft: rgba(161, 63, 54, 0.12);
+  --neutral: #6c5c44;
+  --neutral-soft: rgba(108, 92, 68, 0.12);
   --shadow: 0 1px 2px rgba(40, 30, 10, 0.06), 0 12px 28px -18px rgba(40, 30, 10, 0.18);
 }
 
