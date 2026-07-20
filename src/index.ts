@@ -65,6 +65,9 @@ export type { SearchFieldProps } from './components/molecules/SearchField';
 export { ComboBox } from './components/molecules/ComboBox';
 export type { ComboBoxProps, ComboBoxOption } from './components/molecules/ComboBox';
 
+export { RowActionsMenu } from './components/molecules/RowActionsMenu';
+export type { RowActionsMenuProps, RowAction, RowActionVariant } from './components/molecules/RowActionsMenu';
+
 // organisms
 export { OnboardingCard } from './components/organisms/OnboardingCard';
 export type { OnboardingCardProps, OnboardingAction } from './components/organisms/OnboardingCard';
